@@ -1,0 +1,47 @@
+[project]
+name = "ai-mafia"
+version = "0.1.0"
+description = "AI 에이전트와 함께 진행하는 대화형 마피아 게임 MVP"
+requires-python = ">=3.12"
+dependencies = [
+  # --- Backend와 Streamlit Frontend 실행 의존성 ---
+  "fastapi>=0.116.0,<1",
+  "psycopg[binary]>=3.2.0,<4",
+  "python-dotenv>=1.1.0,<2",
+  "streamlit>=1.55.0,<2",
+  "uvicorn>=0.35.0,<1",
+  # --- AI 마피아 MVP(docs/개발상세플랜/01_core/AI_MAFIA_MASTER_PLAN.md)용 의존성 ---
+  # Redis: 게임 lock·공개 cache·event stream·내부 HMAC nonce
+  "redis>=5.0.0,<7",
+  # 역할 배정 seed를 AES-256-GCM으로 암호화해 PostgreSQL에 보관
+  "cryptography>=50.0.1,<51",
+  # LLM provider 3종(local·OpenAI·Gemini): LLM_PROVIDER 환경 변수로 선택
+  "openai>=1.50.0,<3",
+  "google-genai>=1.0.0,<2",
+  # MCP SDK: mcp_server/mafia_game 게임 컨텍스트 서버와 Backend MCP client
+  "mcp>=1.2.0,<2",
+  # 비동기 HTTP: LLM·MCP 호출과 FastAPI TestClient가 공용으로 사용
+  "httpx>=0.27.0,<1",
+  # SSE: GET /api/v1/games/{game_id}/events 진행 이벤트 구독 (11장)
+  "sse-starlette>=2.1.0,<4",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.4.0,<9",
+  # Backend 개별 requirements와 같은 Starlette TestClient 의존성을 통합 환경에도 둔다.
+  "httpx2>=2.0,<3",
+  # 비동기 게임 엔진·Agent Manager 테스트용
+  "pytest-asyncio>=0.24.0,<2",
+  "ruff>=0.12.0,<1",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "ASYNC", "S"]
+ignore = [
+  "S101", # pytest assert statements
+]

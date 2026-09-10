@@ -1,0 +1,43 @@
+{
+  "slide": 13,
+  "title": "실시간 화면 갱신과 입력을 분리했습니다",
+  "prompt": "# Codex PPT Slide Image Prompt\n\n## Canvas\n{\n  \"type\": \"16:9 full-slide PowerPoint image\",\n  \"language\": \"Korean\",\n  \"slide_number\": 13,\n  \"render_slide_number\": false\n}\n\n## Deck Goal\n15-minute Korean Team 4 project presentation: explain the AI mafia product, separate execution environments, scoped AI decisions and Tools, real game/admin screens, bounded development evidence and commercialization hypotheses.\n\n## Required Background\n{\n  \"deck_context\": {\n    \"current_scope\": \"1 human + 5–8 AI. Shared provider with per-actor isolated input, not separate models. Backend is authoritative for game rules and DB. MCP calls Backend internal API, never DB or LLM directly. Current custom abilities are HUMAN-only; configurable custom AI Tools are future extension. Speech vector analytics uses PostgreSQL arrays; separate pgvector knowledge search code exists but team DB lacks knowledge index tables and LLM-generation connection. No completed RAG-generation claim.\",\n    \"presentation_rules\": \"Server diagram assumes five independently running hosts as explicitly requested by user. Keep observable decision examples distinct from private chain of thought. Historical validation is dated/bounded. Sources in local context support notes; render only concise selected visible copy.\"\n  },\n  \"slide_local_context\": {\n    \"notes_not_for_rendering\": \"문제 해결 ② 실시간 갱신과 채팅 입력의 충돌\\n\\n- 시간: 65초\\n- 역할: 실시간 제품에서 동작 정확성과 사용 경험을 함께 다룬 사례.\\n- 핵심 내용:\\n  - 증상: 화면 자동 갱신이 입력 영역을 다시 만들면서 초안·포커스와 전송 경험을 방해했다.\\n  - 해결: 화면 동기화·타임라인·진행 표시를 Streamlit fragment로 나누고 입력과 분리했다.\\n  - 연속 발언은 FIFO로 예약하고, 응답이 불명확한 재요청은 같은 본문·멱등 키로 확인해 중복을 막았다.\\n  - 과거 실제 브라우저 검증에서 연속 발언 10개가 순서대로 한 번씩 전송됐다. 토론 종료·저장·사용자 변경 시 미전송 예약은 취소한다.\\n- 시각 아이디어: ‘입력 초안’과 ‘2초 상태 갱신 / 1초 시계’를 분리한 흐름, 아래에 입력→대기열→서버 확정.\\n- 표현 경계: 대기열은 브라우저 세션 저장이며 영구 복원 기능이 아니다. 과거 검증에서 실제 한국어 IME 조합은 별도 확인하지 않았다.\\n- 필수 원본 이미지: 없음. 8장의 실제 화면을 작은 참조로 재사용할 수 있지만 신규 필수 이미지는 없다.\\n- 근거: [프론트엔드·UI 변경 이력](../개발상세플랜/90_history/2026-09-07-08-frontend-ui.md).\\n\\n\"\n  }\n}\n\n## Global Style\n{\n  \"name\": \"밝은 테크 스타일\",\n  \"visual_direction\": \"Edit the provided approved slide into this new content slide. Match its white/lavender/navy visual identity, crisp Korean Gothic, simple outline imagery, clear arrows and generous whitespace. Use the sample as style reference only; replace its architecture content and composition completely according to this job.\",\n  \"color_palette\": \"white #FFFFFF, near-white lavender #F7F5FC, navy #17213C, purple #7357D8, pale lavender #EEE8FB, slate #536079\",\n  \"typography\": \"Large bold Korean Gothic titles, readable Korean labels, normal body about 22–28pt equivalent. Use only Korean and exact English technical names. No Chinese text. Cut text rather than shrinking.\",\n  \"texture_and_finish\": \"Clean flat professional raster slide. Very subtle shadows only. No blurry watercolor texture.\",\n  \"density\": \"One clear message per slide, no excessive notes on canvas. Vary layout by role, not repeated card grids.\"\n}\n\n## Input Images\n\n- Image 1: /Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png — approved sample style reference and edit base; style ONLY; Keep palette/typography/icon language; replace source content and choose slide-specific composition.\n\n\n## Slide\n{\n  \"number\": 13,\n  \"title\": \"실시간 화면 갱신과 입력을 분리했습니다\",\n  \"role\": \"case study\",\n  \"intent\": \"Explain this approved outline section with a distinct composition and accurate visible evidence.\"\n}\n\n## Text\n{\n  \"title\": \"실시간 화면 갱신과 입력을 분리했습니다\",\n  \"key_points\": [\n    \"fragment로 화면 갱신과 입력 영역 분리\",\n    \"FIFO 대기열로 연속 발언 순서 유지\",\n    \"같은 멱등 키로 중복 전송 방지\"\n  ],\n  \"speaker_focus\": null\n}\n\n## Layout\n{\n  \"composition\": \"Two clearly separate horizontal lanes, user input draft above and state refresh below. Upper lane: 입력 초안 → FIFO 대기열 → 서버 확정. Lower lane: 상태 갱신 2초 / 시계 1초. A soft barrier communicates the refresh does not reset the input. Strong evidence stamp, not fake UI: 연속 발언 10건 · 순서대로 한 번씩 전송. Small caption: 2026-09-07~08 브라우저 검증 기록. Note in small text: 대기열은 브라우저 세션에 보관. No screenshot and no IME-composition claim.\",\n  \"variation_rule\": \"Use the role-specific composition, not the architecture layout of the sample.\"\n}\n\n## Constraints\n[\n  \"Render only the slide title, key points, and explicit labels/captions requested in Layout. Do not render source/context notes, paths, metadata, time budgets, slide numbers, or the prompt itself.\",\n  \"Korean text must be correct and legible. The Chinese text instruction inherited from the generic helper is inapplicable; use Korean only.\",\n  \"Keep all current implementation vs planned-extension qualifications that Layout requests. No unsupported capabilities or statistics.\",\n  \"Use Image 1 as an edit base for its visual identity only; replace the entire content to make exactly one final full-slide image for this assigned page. Any later input images are strict actual image inserts.\",\n  \"Preserve important source image content. For screenshots, compose original crops; no AI reconstruction of charts, conversations or UI.\",\n  \"No watermark, unrelated logo, extra page number, or extra slides. 16:9 landscape.\"\n]\n\n## Style Reference Rule\nUse Image 1 as the approved sample-slide style reference. Match its palette, typography mood, density, texture, and overall visual identity. Do not copy its exact layout unless this slide's layout explicitly asks for it.\n\n## Input Image Handling Rules\nFor any input image marked as a strict input asset, include it visibly and preserve its content. Do not redraw, replace, relabel, or invent a similar figure. Scale and crop only as needed for composition while keeping the important labels, arrows, data, and relationships recognizable.\n\n## Universal Constraints\n- The final image itself must contain the title and key points.\n- Render Chinese text exactly and legibly; avoid garbled characters.\n- Keep the confirmed deck style consistent while varying layout by slide role.\n- No watermark, unrelated logo, or extra slide number.\n",
+  "out": "slide_13.png",
+  "input_images": [
+    {
+      "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+      "role": "approved sample style reference and edit base; style ONLY",
+      "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+    }
+  ],
+  "requires_context_images": true,
+  "expected_backend": "built-in image tool",
+  "sample_generation_method": {
+    "backend_used": "built-in image tool",
+    "tool_name": "image_gen__imagegen",
+    "mode": "edit",
+    "model": "built-in default, not exposed",
+    "size": "16:9 landscape requested; approved output 1672x941",
+    "quality": "built-in default, not exposed",
+    "prompt_source": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/sample_prompt.draft.md#수정-프롬프트-1",
+    "approved_sample_path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+    "input_context_preparation": "Read each local input via view_image; call image_gen__imagegen with prompt and referenced_image_paths in input_images order. Image 1 is the approved style edit base; later images are strict compositing inserts.",
+    "handoff_rule": "Use exactly the built-in image_gen__imagegen tool in edit/reference-input mode. No CLI, local drawing or overlays. Return blocker if unavailable."
+  },
+  "generation_contract": {
+    "must_use_selected_image_backend": true,
+    "must_match_sample_generation_method": true,
+    "forbidden_final_image_methods": [
+      "local drawing/rendering scripts",
+      "Pillow-generated slides",
+      "SVG/HTML/CSS/canvas screenshots",
+      "python-pptx/PptxGenJS/native PPT layout screenshots",
+      "manually composited text/image overlays"
+    ],
+    "must_return": [
+      "backend_used",
+      "selected_source",
+      "qa_note"
+    ]
+  }
+}

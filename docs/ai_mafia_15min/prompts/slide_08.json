@@ -1,0 +1,53 @@
+{
+  "slide": 8,
+  "title": "같은 대화에도 서로 다르게 반응합니다",
+  "prompt": "# Codex PPT Slide Image Prompt\n\n## Canvas\n{\n  \"type\": \"16:9 full-slide PowerPoint image\",\n  \"language\": \"Korean\",\n  \"slide_number\": 8,\n  \"render_slide_number\": false\n}\n\n## Deck Goal\n15-minute Korean Team 4 project presentation: explain the AI mafia product, separate execution environments, scoped AI decisions and Tools, real game/admin screens, bounded development evidence and commercialization hypotheses.\n\n## Required Background\n{\n  \"deck_context\": {\n    \"current_scope\": \"1 human + 5–8 AI. Shared provider with per-actor isolated input, not separate models. Backend is authoritative for game rules and DB. MCP calls Backend internal API, never DB or LLM directly. Current custom abilities are HUMAN-only; configurable custom AI Tools are future extension. Speech vector analytics uses PostgreSQL arrays; separate pgvector knowledge search code exists but team DB lacks knowledge index tables and LLM-generation connection. No completed RAG-generation claim.\",\n    \"presentation_rules\": \"Server diagram assumes five independently running hosts as explicitly requested by user. Keep observable decision examples distinct from private chain of thought. Historical validation is dated/bounded. Sources in local context support notes; render only concise selected visible copy.\"\n  },\n  \"slide_local_context\": {\n    \"notes_not_for_rendering\": \"실제 게임 화면: 같은 대화, 서로 다른 반응\\n\\n- 시간: 60초\\n- 역할: Agent 설명을 실제 제품 화면으로 확인한다.\\n- 핵심 내용:\\n  - 왼쪽은 내 역할·능력·생존 상태와 플레이어 목록이다.\\n  - 오른쪽은 인간과 AI의 공개 대화이며, 참가자들은 앞선 발언을 읽고 반응한다.\\n  - 이번 캡처에서 플레이어 3의 사실·추측 구분 질문에 플레이어 4가 근거를 요구하는 장면이 나타난다.\\n  - 사용자는 대화에 참여하고, 현재 가능한 행동과 남은 시간을 확인한다.\\n- 시각 아이디어: 실제 대화 캡처를 크게 두고 ‘나의 능력 / 공개 대화 / 행동 마감’에 짧은 설명을 붙인다.\\n- 필수 원본 이미지:\\n  - 실제 토론 화면; strict input asset; UI 구조와 실제 글자를 보존한다.\\n\\n    ![토론 화면](assets/screenshots/game_discussion.jpg)\\n\\n  - 실제 공개 대화; strict input asset; 인간 발언과 플레이어 3·4의 발언을 새로 작성하거나 다른 성능 사례로 바꾸지 않는다.\\n\\n    ![인간과 AI의 실제 대화](assets/screenshots/game_chat.jpg)\\n- 표현 경계: 한 번의 화면 관찰로 추리 정확도·대화 품질 개선율을 주장하지 않는다. 플레이어 4의 주장은 확인된 사실이 아니다.\\n- 근거: 2026-09-09 새로 만든 6인 ‘정전된 방송국’ 커스텀 게임. 화면 확보 후 ‘저장됨’을 확인했다.\\n\\n\"\n  }\n}\n\n## Global Style\n{\n  \"name\": \"밝은 테크 스타일\",\n  \"visual_direction\": \"Edit the provided approved slide into this new content slide. Match its white/lavender/navy visual identity, crisp Korean Gothic, simple outline imagery, clear arrows and generous whitespace. Use the sample as style reference only; replace its architecture content and composition completely according to this job.\",\n  \"color_palette\": \"white #FFFFFF, near-white lavender #F7F5FC, navy #17213C, purple #7357D8, pale lavender #EEE8FB, slate #536079\",\n  \"typography\": \"Large bold Korean Gothic titles, readable Korean labels, normal body about 22–28pt equivalent. Use only Korean and exact English technical names. No Chinese text. Cut text rather than shrinking.\",\n  \"texture_and_finish\": \"Clean flat professional raster slide. Very subtle shadows only. No blurry watercolor texture.\",\n  \"density\": \"One clear message per slide, no excessive notes on canvas. Vary layout by role, not repeated card grids.\"\n}\n\n## Input Images\n\n- Image 1: /Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png — approved sample style reference and edit base; style ONLY; Keep palette/typography/icon language; replace source content and choose slide-specific composition.\n- Image 2: /Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/assets/screenshots/game_discussion.jpg — strict input asset; actual project art or real application screenshot; Preserve the original visual content, Korean text, numerical values, selected options, axes, colors and dialogue. Include visibly as an actual image insert; never redraw or synthesize a similar replacement.\n- Image 3: /Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/assets/screenshots/game_chat.jpg — strict input asset; actual project art or real application screenshot; Preserve the original visual content, Korean text, numerical values, selected options, axes, colors and dialogue. Include visibly as an actual image insert; never redraw or synthesize a similar replacement.\n\n\n## Slide\n{\n  \"number\": 8,\n  \"title\": \"같은 대화에도 서로 다르게 반응합니다\",\n  \"role\": \"screenshots\",\n  \"intent\": \"Explain this approved outline section with a distinct composition and accurate visible evidence.\"\n}\n\n## Text\n{\n  \"title\": \"같은 대화에도 서로 다르게 반응합니다\",\n  \"key_points\": [\n    \"내 정보와 진행 상태\",\n    \"인간과 AI가 함께 만드는 공개 대화\"\n  ],\n  \"speaker_focus\": null\n}\n\n## Layout\n{\n  \"composition\": \"Image 2 game_discussion is smaller left overview showing role and public-chat structure. Image 3 game_chat is the larger main evidence on the right; crop to x=340–1235,y=205–590 to prominently show the actual three consecutive speech bubbles from players 3, 1, 4, with exact existing text. Preserve the real text and colors. Put simple captions outside the crops, not over content. Large evidence dominates the slide, with a short bottom sentence: 앞선 발언을 읽고 각자의 역할·성격에 따라 반응합니다. No invented dialogue.\",\n  \"variation_rule\": \"Use the role-specific composition, not the architecture layout of the sample.\"\n}\n\n## Source Image Rules\n{\n  \"user_approved_exception\": \"Original screenshots will be inserted by parent as native PowerPoint picture objects over generated screenshot regions. This resolves source-fidelity limitations while retaining ImageGen design. The final PPTX must preserve exact original image bytes.\",\n  \"approved\": true\n}\n\n## Constraints\n[\n  \"Render only the slide title, key points, and explicit labels/captions requested in Layout. Do not render source/context notes, paths, metadata, time budgets, slide numbers, or the prompt itself.\",\n  \"Korean text must be correct and legible. The Chinese text instruction inherited from the generic helper is inapplicable; use Korean only.\",\n  \"Keep all current implementation vs planned-extension qualifications that Layout requests. No unsupported capabilities or statistics.\",\n  \"Use Image 1 as an edit base for its visual identity only; replace the entire content to make exactly one final full-slide image for this assigned page. Any later input images are strict actual image inserts.\",\n  \"Preserve important source image content. For screenshots, compose original crops; no AI reconstruction of charts, conversations or UI.\",\n  \"No watermark, unrelated logo, extra page number, or extra slides. 16:9 landscape.\"\n]\n\n## Style Reference Rule\nUse Image 1 as the approved sample-slide style reference. Match its palette, typography mood, density, texture, and overall visual identity. Do not copy its exact layout unless this slide's layout explicitly asks for it.\n\n## Input Image Handling Rules\nFor any input image marked as a strict input asset, include it visibly and preserve its content. Do not redraw, replace, relabel, or invent a similar figure. Scale and crop only as needed for composition while keeping the important labels, arrows, data, and relationships recognizable.\n\n## Universal Constraints\n- The final image itself must contain the title and key points.\n- Render Chinese text exactly and legibly; avoid garbled characters.\n- Keep the confirmed deck style consistent while varying layout by slide role.\n- No watermark, unrelated logo, or extra slide number.\n",
+  "out": "slide_08.png",
+  "input_images": [
+    {
+      "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+      "role": "approved sample style reference and edit base; style ONLY",
+      "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+    },
+    {
+      "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/assets/screenshots/game_discussion.jpg",
+      "role": "strict input asset; actual project art or real application screenshot",
+      "fidelity": "Preserve the original visual content, Korean text, numerical values, selected options, axes, colors and dialogue. Include visibly as an actual image insert; never redraw or synthesize a similar replacement."
+    },
+    {
+      "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/assets/screenshots/game_chat.jpg",
+      "role": "strict input asset; actual project art or real application screenshot",
+      "fidelity": "Preserve the original visual content, Korean text, numerical values, selected options, axes, colors and dialogue. Include visibly as an actual image insert; never redraw or synthesize a similar replacement."
+    }
+  ],
+  "requires_context_images": true,
+  "expected_backend": "built-in image tool",
+  "sample_generation_method": {
+    "backend_used": "built-in image tool",
+    "tool_name": "image_gen__imagegen",
+    "mode": "edit",
+    "model": "built-in default, not exposed",
+    "size": "16:9 landscape requested; approved output 1672x941",
+    "quality": "built-in default, not exposed",
+    "prompt_source": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/sample_prompt.draft.md#수정-프롬프트-1",
+    "approved_sample_path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+    "input_context_preparation": "Read each local input via view_image; call image_gen__imagegen with prompt and referenced_image_paths in input_images order. Image 1 is the approved style edit base; later images are strict compositing inserts.",
+    "handoff_rule": "Use exactly the built-in image_gen__imagegen tool in edit/reference-input mode. No CLI, local drawing or overlays. Return blocker if unavailable."
+  },
+  "generation_contract": {
+    "must_use_selected_image_backend": true,
+    "must_match_sample_generation_method": true,
+    "forbidden_final_image_methods": [
+      "local drawing/rendering scripts",
+      "Pillow-generated slides",
+      "SVG/HTML/CSS/canvas screenshots",
+      "python-pptx/PptxGenJS/native PPT layout screenshots",
+      "manually composited text/image overlays"
+    ],
+    "must_return": [
+      "backend_used",
+      "selected_source",
+      "qa_note"
+    ]
+  }
+}

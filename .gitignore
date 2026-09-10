@@ -1,0 +1,55 @@
+# Local secrets
+.env
+.env.*
+!.env.example
+**/.streamlit/secrets.toml
+!**/.streamlit/secrets.toml.example
+
+# Python / backend
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node / frontend
+node_modules/
+dist/
+.vite/
+coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editors / operating systems
+.DS_Store
+.idea/
+.vscode/
+tests/*
+tests/
+# 게임 운영 진행 로그와 순환 백업은 실행 산출물이며 저장소에 포함하지 않는다.
+backend/logs/
+
+# 승인된 신규 회귀 파일만 기존 tests 제외 규칙에서 다시 추적한다.
+!backend/tests/
+backend/tests/*
+!backend/tests/test_agent_activity.py
+!backend/tests/test_agent_report_behavior.py
+!backend/tests/test_agent_report_recovery.py
+!backend/tests/test_speech_analysis_repository.py
+!backend/tests/test_speech_analysis_provider.py
+!backend/tests/test_speech_analysis_worker.py
+!backend/tests/test_vote_insights.py
+!backend/tests/test_vote_insight_integration.py
+!frontend_user/tests/
+frontend_user/tests/*
+!frontend_user/tests/test_identity_f1.py
+!frontend_user/tests/test_vote_insights_f9.py
+# 루트 실행 로그에는 사용자·게임 식별자가 포함될 수 있으므로 추적하지 않는다.
+/*_runtime*.log

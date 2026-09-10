@@ -1,0 +1,22 @@
+# Backend API와 데이터 저장에 사용하는 의존성
+fastapi>=0.116,<1.0
+pydantic>=2.11,<3.0
+psycopg[binary]>=3.2,<4.0
+python-dotenv>=1.1,<2.0
+uvicorn>=0.35,<1.0
+# AI 마피아 MVP(docs/개발상세플랜/01_core/AI_MAFIA_MASTER_PLAN.md)용 의존성
+redis>=5.0,<7.0
+# 역할 배정 seed의 AES-256-GCM 암호화
+cryptography>=50.0.1,<51.0
+openai>=1.50,<3.0
+google-genai>=1.0,<2.0
+mcp>=1.2,<2.0
+httpx>=0.27,<1.0
+# 최신 Starlette TestClient가 사용하는 차세대 HTTPX 호환 패키지다.
+httpx2>=2.0,<3.0
+sse-starlette>=2.1,<4.0
+
+# Backend Provider·API 회귀 테스트와 정적 검사
+pytest>=8.4,<9.0
+pytest-asyncio>=0.24,<2.0
+ruff>=0.12,<1.0

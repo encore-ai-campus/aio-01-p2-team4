@@ -1,0 +1,43 @@
+{
+  "slide": 5,
+  "title": "다섯 시스템, 다섯 개의 독립 서버",
+  "prompt": "# Codex PPT Slide Image Prompt\n\n## Canvas\n{\n  \"type\": \"16:9 full-slide PowerPoint image\",\n  \"language\": \"Korean\",\n  \"slide_number\": 5,\n  \"render_slide_number\": false\n}\n\n## Deck Goal\n15-minute Korean Team 4 project presentation: explain the AI mafia product, separate execution environments, scoped AI decisions and Tools, real game/admin screens, bounded development evidence and commercialization hypotheses.\n\n## Required Background\n{\n  \"deck_context\": {\n    \"current_scope\": \"1 human + 5–8 AI. Shared provider with per-actor isolated input, not separate models. Backend is authoritative for game rules and DB. MCP calls Backend internal API, never DB or LLM directly. Current custom abilities are HUMAN-only; configurable custom AI Tools are future extension. Speech vector analytics uses PostgreSQL arrays; separate pgvector knowledge search code exists but team DB lacks knowledge index tables and LLM-generation connection. No completed RAG-generation claim.\",\n    \"presentation_rules\": \"Server diagram assumes five independently running hosts as explicitly requested by user. Keep observable decision examples distinct from private chain of thought. Historical validation is dated/bounded. Sources in local context support notes; render only concise selected visible copy.\"\n  },\n  \"slide_local_context\": {\n    \"notes_not_for_rendering\": \"서로 다른 환경에서 실행되는 다섯 시스템\\n\\n- 시간: 80초\\n- 역할: 전체 아키텍처. 사용자 요청에 따라 **Frontend 2개·Backend 1개·MCP Server·DB Server가 각각 다른 환경의 독립 서버에서 실행 중인 상황**을 가정해 설명한다.\\n- 핵심 내용:\\n  - 환경 A: 사용자 Frontend / Streamlit — 게임 조작과 상태 표시\\n  - 환경 B: 관리자 Frontend / Streamlit — 읽기 전용 운영·발언 분석\\n  - 환경 C: Backend / FastAPI — Agent 실행, 게임 규칙 검증, 저장·확정\\n  - 환경 D: MCP Server / FastMCP — Resource·Prompt·Tool과 Backend 내부 API 연결\\n  - 환경 E: DB Server / PostgreSQL — 영구 원본, Redis는 재구성 가능한 공개 이력 캐시\\n- 시각 아이디어:\\n  - 다섯 개의 서버 경계를 그린다. 각 영역에는 ‘서버 A~E’, ‘독립 환경’, ‘실행 중’을 표시한다. Backend 서버 안에 Game Engine과 Agent Orchestrator를 둔다.\\n  - 상단에 ‘분산 실행 가정’을 표시하고 하단에는 다섯 서버가 독립 환경에서 실행되며 네트워크로 통신한다는 메시지를 둔다.\\n  - 사용자·관리자 Front → Backend: HTTP API. 게임 화면으로 돌아가는 sync/SSE도 짧게 표시한다.\\n  - Backend → MCP: Resource·Tool 요청. MCP → Backend: 내부 HTTP API 요청. 서로 다른 종류의 요청임을 라벨로 구분한다.\\n  - Backend → LLM Provider: 모델 호출. Backend → PostgreSQL·Redis: 상태와 공개 캐시.\\n  - LLM Provider는 외부 의존성으로 작게 배치한다. Redis는 DB 환경 옆 보조 저장소로 묶되 독립 주소도 가능함을 노트에서 설명한다.\\n- 표현 경계: 이 도식은 사용자가 요청한 **다섯 서버의 분산 실행 가정**이다. 이번 발표 준비에서 다섯 원격 호스트의 동시 기동을 검증한 결과로 제시하지 않는다. 실제 분리 배포에는 서비스 주소·네트워크 접근·CORS 설정이 필요하다.\\n- 필수 원본 이미지: 없음. 기존 `docs/diagrams/system-map.html`은 연결 관계 검토용이며 고정 레이아웃으로 복사하지 않는다.\\n- 코드 근거: 두 Front의 `core/api_client.py`, Backend `core/config.py`, MCP `main.py`와 `integrations/engine_http.py`.\\n\\n\"\n  }\n}\n\n## Global Style\n{\n  \"name\": \"밝은 테크 스타일\",\n  \"visual_direction\": \"Edit the provided approved slide into this new content slide. Match its white/lavender/navy visual identity, crisp Korean Gothic, simple outline imagery, clear arrows and generous whitespace. Use the sample as style reference only; replace its architecture content and composition completely according to this job.\",\n  \"color_palette\": \"white #FFFFFF, near-white lavender #F7F5FC, navy #17213C, purple #7357D8, pale lavender #EEE8FB, slate #536079\",\n  \"typography\": \"Large bold Korean Gothic titles, readable Korean labels, normal body about 22–28pt equivalent. Use only Korean and exact English technical names. No Chinese text. Cut text rather than shrinking.\",\n  \"texture_and_finish\": \"Clean flat professional raster slide. Very subtle shadows only. No blurry watercolor texture.\",\n  \"density\": \"One clear message per slide, no excessive notes on canvas. Vary layout by role, not repeated card grids.\"\n}\n\n## Input Images\n\n- Image 1: /Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png — approved sample style reference and edit base; style ONLY; Keep palette/typography/icon language; replace source content and choose slide-specific composition.\n\n\n## Slide\n{\n  \"number\": 5,\n  \"title\": \"다섯 시스템, 다섯 개의 독립 서버\",\n  \"role\": \"architecture\",\n  \"intent\": \"Explain this approved outline section with a distinct composition and accurate visible evidence.\"\n}\n\n## Text\n{\n  \"title\": \"다섯 시스템, 다섯 개의 독립 서버\",\n  \"key_points\": [],\n  \"speaker_focus\": null\n}\n\n## Layout\n{\n  \"composition\": \"Approved sample: reuse unchanged.\",\n  \"variation_rule\": \"Use the role-specific composition, not the architecture layout of the sample.\"\n}\n\n## Constraints\n[\n  \"Render only the slide title, key points, and explicit labels/captions requested in Layout. Do not render source/context notes, paths, metadata, time budgets, slide numbers, or the prompt itself.\",\n  \"Korean text must be correct and legible. The Chinese text instruction inherited from the generic helper is inapplicable; use Korean only.\",\n  \"Keep all current implementation vs planned-extension qualifications that Layout requests. No unsupported capabilities or statistics.\",\n  \"Use Image 1 as an edit base for its visual identity only; replace the entire content to make exactly one final full-slide image for this assigned page. Any later input images are strict actual image inserts.\",\n  \"Preserve important source image content. For screenshots, compose original crops; no AI reconstruction of charts, conversations or UI.\",\n  \"No watermark, unrelated logo, extra page number, or extra slides. 16:9 landscape.\"\n]\n\n## Style Reference Rule\nUse Image 1 as the approved sample-slide style reference. Match its palette, typography mood, density, texture, and overall visual identity. Do not copy its exact layout unless this slide's layout explicitly asks for it.\n\n## Input Image Handling Rules\nFor any input image marked as a strict input asset, include it visibly and preserve its content. Do not redraw, replace, relabel, or invent a similar figure. Scale and crop only as needed for composition while keeping the important labels, arrows, data, and relationships recognizable.\n\n## Universal Constraints\n- The final image itself must contain the title and key points.\n- Render Chinese text exactly and legibly; avoid garbled characters.\n- Keep the confirmed deck style consistent while varying layout by slide role.\n- No watermark, unrelated logo, or extra slide number.\n",
+  "out": "slide_05.png",
+  "input_images": [
+    {
+      "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+      "role": "approved sample style reference and edit base; style ONLY",
+      "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+    }
+  ],
+  "requires_context_images": true,
+  "expected_backend": "built-in image tool",
+  "sample_generation_method": {
+    "backend_used": "built-in image tool",
+    "tool_name": "image_gen__imagegen",
+    "mode": "edit",
+    "model": "built-in default, not exposed",
+    "size": "16:9 landscape requested; approved output 1672x941",
+    "quality": "built-in default, not exposed",
+    "prompt_source": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/sample_prompt.draft.md#수정-프롬프트-1",
+    "approved_sample_path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+    "input_context_preparation": "Read each local input via view_image; call image_gen__imagegen with prompt and referenced_image_paths in input_images order. Image 1 is the approved style edit base; later images are strict compositing inserts.",
+    "handoff_rule": "Use exactly the built-in image_gen__imagegen tool in edit/reference-input mode. No CLI, local drawing or overlays. Return blocker if unavailable."
+  },
+  "generation_contract": {
+    "must_use_selected_image_backend": true,
+    "must_match_sample_generation_method": true,
+    "forbidden_final_image_methods": [
+      "local drawing/rendering scripts",
+      "Pillow-generated slides",
+      "SVG/HTML/CSS/canvas screenshots",
+      "python-pptx/PptxGenJS/native PPT layout screenshots",
+      "manually composited text/image overlays"
+    ],
+    "must_return": [
+      "backend_used",
+      "selected_source",
+      "qa_note"
+    ]
+  }
+}

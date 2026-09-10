@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "AI 마피아 · 시스템 관계",
+    "quality_profile": "showcase",
+    "viewBox": [1390, 760]
+  },
+  "components": [
+    {"id":"player-app","type":"frontend","label":"사용자 Front","sublabel":"Streamlit · 게임과 공개 대화","pos":[40,330],"size":[240,90]},
+    {"id":"admin-app","type":"frontend","label":"관리자 Front","sublabel":"Streamlit · 읽기 전용 분석","pos":[40,90],"size":[240,90]},
+    {"id":"game-backend","type":"backend","label":"Backend","sublabel":"FastAPI · 게임 엔진 · AI worker","tag":"판정과 상태 변경의 최종 권위","pos":[430,330],"size":[280,90]},
+    {"id":"game-mcp","type":"messagebus","label":"MCP Server","sublabel":"FastMCP · 문맥과 행동 위임","pos":[850,90],"size":[260,90]},
+    {"id":"model-provider","type":"external","label":"LLM Provider","sublabel":"AI별 입력으로 별도 판단 요청","pos":[850,590],"size":[260,90]},
+    {"id":"game-store","type":"database","label":"PostgreSQL","sublabel":"게임 · 행동 · 이벤트 · 분석 원본","pos":[1140,330],"size":[240,90]},
+    {"id":"public-cache","type":"database","label":"Redis","sublabel":"공개 대화 이력 캐시","pos":[430,590],"size":[280,90]}
+  ],
+  "connections": [
+    {"id":"player-api","from":"player-app","to":"game-backend","label":"공개 HTTP API","variant":"emphasis"},
+    {"id":"admin-api","from":"admin-app","to":"game-backend","label":"관리자 GET","fromSide":"right","toSide":"top"},
+    {"id":"persist-state","from":"game-backend","to":"game-store","label":"검증 후 SQL 저장","variant":"emphasis"},
+    {"id":"read-public-cache","from":"game-backend","to":"public-cache","label":"공개 이력 조회·갱신","labelDy":90},
+    {"id":"request-mcp","from":"game-backend","to":"game-mcp","label":"MCP 조회·발언","fromSide":"top","toSide":"left","labelDx":-35},
+    {"id":"delegate-backend","from":"game-mcp","to":"game-backend","label":"내부 HTTP","fromSide":"bottom","toSide":"right"},
+    {"id":"request-model","from":"game-backend","to":"model-provider","label":"개별 LLM 요청","fromSide":"right","toSide":"top"}
+  ],
+  "cards": [
+    {"dot":"cyan","title":"판단은 각자","items":["AI별 컨텍스트와 요청 분리","공개 기록만 공통으로 관찰"]},
+    {"dot":"emerald","title":"결과는 Backend가 확정","items":["모델은 행동을 제안","게임 규칙·대상·마감 재검증"]},
+    {"dot":"violet","title":"MCP는 연결 계층","items":["DB·Redis·LLM 직접 접근 없음","Front도 Backend API만 호출"]}
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "slide": 4,
+  "title": "실제 플레이는 역할 확인에서 시작됩니다",
+  "prompt": "# Codex PPT Slide Image Prompt\n\n## Canvas\n{\n  \"type\": \"16:9 full-slide PowerPoint image\",\n  \"language\": \"Korean\",\n  \"slide_number\": 4,\n  \"render_slide_number\": false\n}\n\n## Deck Goal\n15-minute Korean Team 4 project presentation: explain the AI mafia product, separate execution environments, scoped AI decisions and Tools, real game/admin screens, bounded development evidence and commercialization hypotheses.\n\n## Required Background\n{\n  \"deck_context\": {\n    \"current_scope\": \"1 human + 5–8 AI. Shared provider with per-actor isolated input, not separate models. Backend is authoritative for game rules and DB. MCP calls Backend internal API, never DB or LLM directly. Current custom abilities are HUMAN-only; configurable custom AI Tools are future extension. Speech vector analytics uses PostgreSQL arrays; separate pgvector knowledge search code exists but team DB lacks knowledge index tables and LLM-generation connection. No completed RAG-generation claim.\",\n    \"presentation_rules\": \"Server diagram assumes five independently running hosts as explicitly requested by user. Keep observable decision examples distinct from private chain of thought. Historical validation is dated/bounded. Sources in local context support notes; render only concise selected visible copy.\"\n  },\n  \"slide_local_context\": {\n    \"notes_not_for_rendering\": \"실제 플레이: 역할 확인부터 한 판의 시작까지\\n\\n- 시간: 35초\\n- 역할: 기술 설명 전에 서비스 사용 장면을 보여 준다.\\n- 핵심 내용:\\n  - 6~9인 게임을 만들고 자신의 역할·진영·능력을 확인한다.\\n  - 토론 → 밤 행동 → 다음 날 토론·투표 → 승패로 진행한다.\\n  - 첫날은 투표 없이 밤으로 넘어가며, 중간 저장·이어하기를 지원한다.\\n- 시각 아이디어: 홈과 역할 공개 화면을 나란히 놓고 아래에 짧은 게임 흐름을 표시한다.\\n- 필수 원본 이미지:\\n  - 실제 홈; strict input asset; 상단 서비스 소개·캐릭터 부분을 사용하고 UUID 영역은 배치에서 제외한다.\\n\\n    ![실제 홈 화면](assets/screenshots/home.jpg)\\n\\n  - 실제 커스텀 직업 역할 공개; strict input asset; ‘전략 탐정’과 ‘정전된 방송국’을 실제 화면 그대로 유지한다.\\n\\n    ![역할 공개 화면](assets/screenshots/role_reveal.jpg)\\n- 근거: 2026-09-09 실행 중인 앱의 직접 캡처, README 게임 규칙.\\n\\n\"\n  }\n}\n\n## Global Style\n{\n  \"name\": \"밝은 테크 스타일\",\n  \"visual_direction\": \"Edit the provided approved slide into this new content slide. Match its white/lavender/navy visual identity, crisp Korean Gothic, simple outline imagery, clear arrows and generous whitespace. Use the sample as style reference only; replace its architecture content and composition completely according to this job.\",\n  \"color_palette\": \"white #FFFFFF, near-white lavender #F7F5FC, navy #17213C, purple #7357D8, pale lavender #EEE8FB, slate #536079\",\n  \"typography\": \"Large bold Korean Gothic titles, readable Korean labels, normal body about 22–28pt equivalent. Use only Korean and exact English technical names. No Chinese text. Cut text rather than shrinking.\",\n  \"texture_and_finish\": \"Clean flat professional raster slide. Very subtle shadows only. No blurry watercolor texture.\",\n  \"density\": \"One clear message per slide, no excessive notes on canvas. Vary layout by role, not repeated card grids.\"\n}\n\n## Input Images\n\n- Image 1: /Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png — approved sample style reference and edit base; style ONLY; Keep palette/typography/icon language; replace source content and choose slide-specific composition.\n- Image 2: /Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/assets/screenshots/home.jpg — strict input asset; actual project art or real application screenshot; Preserve the original visual content, Korean text, numerical values, selected options, axes, colors and dialogue. Include visibly as an actual image insert; never redraw or synthesize a similar replacement.\n- Image 3: /Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/assets/screenshots/role_reveal.jpg — strict input asset; actual project art or real application screenshot; Preserve the original visual content, Korean text, numerical values, selected options, axes, colors and dialogue. Include visibly as an actual image insert; never redraw or synthesize a similar replacement.\n\n\n## Slide\n{\n  \"number\": 4,\n  \"title\": \"실제 플레이는 역할 확인에서 시작됩니다\",\n  \"role\": \"screenshots\",\n  \"intent\": \"Explain this approved outline section with a distinct composition and accurate visible evidence.\"\n}\n\n## Text\n{\n  \"title\": \"실제 플레이는 역할 확인에서 시작됩니다\",\n  \"key_points\": [\n    \"홈에서 게임 생성\",\n    \"내 역할·진영·능력 확인\",\n    \"토론 → 밤 행동 → 다음 날 토론·투표 → 승패\"\n  ],\n  \"speaker_focus\": null\n}\n\n## Layout\n{\n  \"composition\": \"Two actual screen crops side by side. Image 2 HOME crop only its top introduction and art, y=40–390 of the 1280×720 source; completely exclude UUID and identifier fields below y=400. Image 3 ROLE crop the central real role card x=325–945,y=270–710 including 전략 탐정 and 정전된 방송국. Preserve exact screenshot pixels/content, no redraw. Short bottom flow, then small note: 첫날은 투표 없이 밤으로 진행.\",\n  \"variation_rule\": \"Use the role-specific composition, not the architecture layout of the sample.\"\n}\n\n## Source Image Rules\n{\n  \"user_approved_exception\": \"Original screenshots will be inserted by parent as native PowerPoint picture objects over generated screenshot regions. This resolves source-fidelity limitations while retaining ImageGen design. The final PPTX must preserve exact original image bytes.\",\n  \"approved\": true\n}\n\n## Constraints\n[\n  \"Render only the slide title, key points, and explicit labels/captions requested in Layout. Do not render source/context notes, paths, metadata, time budgets, slide numbers, or the prompt itself.\",\n  \"Korean text must be correct and legible. The Chinese text instruction inherited from the generic helper is inapplicable; use Korean only.\",\n  \"Keep all current implementation vs planned-extension qualifications that Layout requests. No unsupported capabilities or statistics.\",\n  \"Use Image 1 as an edit base for its visual identity only; replace the entire content to make exactly one final full-slide image for this assigned page. Any later input images are strict actual image inserts.\",\n  \"Preserve important source image content. For screenshots, compose original crops; no AI reconstruction of charts, conversations or UI.\",\n  \"No watermark, unrelated logo, extra page number, or extra slides. 16:9 landscape.\"\n]\n\n## Style Reference Rule\nUse Image 1 as the approved sample-slide style reference. Match its palette, typography mood, density, texture, and overall visual identity. Do not copy its exact layout unless this slide's layout explicitly asks for it.\n\n## Input Image Handling Rules\nFor any input image marked as a strict input asset, include it visibly and preserve its content. Do not redraw, replace, relabel, or invent a similar figure. Scale and crop only as needed for composition while keeping the important labels, arrows, data, and relationships recognizable.\n\n## Universal Constraints\n- The final image itself must contain the title and key points.\n- Render Chinese text exactly and legibly; avoid garbled characters.\n- Keep the confirmed deck style consistent while varying layout by slide role.\n- No watermark, unrelated logo, or extra slide number.\n",
+  "out": "slide_04.png",
+  "input_images": [
+    {
+      "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+      "role": "approved sample style reference and edit base; style ONLY",
+      "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+    },
+    {
+      "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/assets/screenshots/home.jpg",
+      "role": "strict input asset; actual project art or real application screenshot",
+      "fidelity": "Preserve the original visual content, Korean text, numerical values, selected options, axes, colors and dialogue. Include visibly as an actual image insert; never redraw or synthesize a similar replacement."
+    },
+    {
+      "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/assets/screenshots/role_reveal.jpg",
+      "role": "strict input asset; actual project art or real application screenshot",
+      "fidelity": "Preserve the original visual content, Korean text, numerical values, selected options, axes, colors and dialogue. Include visibly as an actual image insert; never redraw or synthesize a similar replacement."
+    }
+  ],
+  "requires_context_images": true,
+  "expected_backend": "built-in image tool",
+  "sample_generation_method": {
+    "backend_used": "built-in image tool",
+    "tool_name": "image_gen__imagegen",
+    "mode": "edit",
+    "model": "built-in default, not exposed",
+    "size": "16:9 landscape requested; approved output 1672x941",
+    "quality": "built-in default, not exposed",
+    "prompt_source": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/sample_prompt.draft.md#수정-프롬프트-1",
+    "approved_sample_path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+    "input_context_preparation": "Read each local input via view_image; call image_gen__imagegen with prompt and referenced_image_paths in input_images order. Image 1 is the approved style edit base; later images are strict compositing inserts.",
+    "handoff_rule": "Use exactly the built-in image_gen__imagegen tool in edit/reference-input mode. No CLI, local drawing or overlays. Return blocker if unavailable."
+  },
+  "generation_contract": {
+    "must_use_selected_image_backend": true,
+    "must_match_sample_generation_method": true,
+    "forbidden_final_image_methods": [
+      "local drawing/rendering scripts",
+      "Pillow-generated slides",
+      "SVG/HTML/CSS/canvas screenshots",
+      "python-pptx/PptxGenJS/native PPT layout screenshots",
+      "manually composited text/image overlays"
+    ],
+    "must_return": [
+      "backend_used",
+      "selected_source",
+      "qa_note"
+    ]
+  }
+}

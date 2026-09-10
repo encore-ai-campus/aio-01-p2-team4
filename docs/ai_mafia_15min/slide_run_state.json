@@ -1,0 +1,54 @@
+{
+  "status": "assembled",
+  "history": [
+    {
+      "from": "created",
+      "to": "jobs_prepared",
+      "at": "2026-09-09T01:25:34Z",
+      "note": "prepared slide prompt jobs"
+    },
+    {
+      "from": "jobs_prepared",
+      "to": "blocked",
+      "at": "2026-09-09T01:30:56Z",
+      "note": "slide_04: 내장 이미지 편집 3회 이후에도 실제 화면의 원본 비율·배치가 변경됨. 원본 스크린샷을 PPT 이미지로 직접 삽입하는 방식의 사용자 선택 대기. 후보: /Users/shsmac/.codex/generated_images/01a083c5-6aeb-7033-a869-a88fdb85196f/exec-5eeadad5-53f9-41d7-86ef-df8aa136b737.png"
+    },
+    {
+      "from": "blocked",
+      "to": "jobs_prepared",
+      "at": "2026-09-09T01:33:47Z",
+      "note": "prepared slide prompt jobs"
+    },
+    {
+      "from": "jobs_prepared",
+      "to": "slides_dispatched",
+      "at": "2026-09-09T01:43:57Z",
+      "note": "all slide jobs dispatched"
+    },
+    {
+      "from": "slides_dispatched",
+      "to": "jobs_prepared",
+      "at": "2026-09-09T01:45:36Z",
+      "note": "prepared slide prompt jobs"
+    },
+    {
+      "from": "jobs_prepared",
+      "to": "slides_dispatched",
+      "at": "2026-09-09T01:45:38Z",
+      "note": "all slide jobs dispatched"
+    },
+    {
+      "from": "slides_dispatched",
+      "to": "slides_recorded",
+      "at": "2026-09-09T01:48:25Z",
+      "note": "all slide images recorded"
+    },
+    {
+      "from": "slides_recorded",
+      "to": "assembled",
+      "at": "2026-09-09T01:52:44Z",
+      "note": "16장 PPTX·16개 발표자 노트·원본 화면 8개와 PDF 렌더 검토 완료"
+    }
+  ],
+  "updated_at": "2026-09-09T01:52:44Z"
+}

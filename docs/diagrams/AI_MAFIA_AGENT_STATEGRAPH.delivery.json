@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "deliver",
+  "type": "workflow",
+  "input": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/AI_MAFIA_AGENT_STATEGRAPH.workflow.json",
+  "output": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/AI_MAFIA_AGENT_STATEGRAPH.html",
+  "specification": {
+    "sha256": "c37a1380da0a06114cc9cad3a3d13ccaf7bd73c1a879703f14017d8d707fcc51",
+    "bytes": 3967
+  },
+  "artifact": {
+    "sha256": "2849f152df5c22706673ff9b6a387546d18bb9f18b3b8ae6ea61b3230203b4c5",
+    "bytes": 717506
+  },
+  "validation": {
+    "checksPassed": 9,
+    "checkCount": 9,
+    "compositionProfile": "showcase",
+    "compositionStatus": "pass",
+    "errors": 0,
+    "warnings": 0
+  }
+}

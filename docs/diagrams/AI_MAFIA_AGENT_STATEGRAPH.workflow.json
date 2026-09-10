@@ -1,0 +1,190 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "AI 마피아 에이전트 StateGraph 설계안",
+    "quality_profile": "showcase"
+  },
+  "lanes": [
+    {
+      "id": "agent_loop",
+      "label": "인지 → 판단 → 행동 → 검증"
+    },
+    {
+      "id": "recovery",
+      "label": "기억·예외 처리",
+      "variant": "exception"
+    }
+  ],
+  "mainPath": [
+    "perceive",
+    "context",
+    "decide",
+    "act",
+    "verify",
+    "finish"
+  ],
+  "nodes": [
+    {
+      "id": "perceive",
+      "lane": "agent_loop",
+      "col": 0,
+      "type": "frontend",
+      "label": "의도·권한 인지",
+      "sublabel": "게임 작업 종류 확인"
+    },
+    {
+      "id": "context",
+      "lane": "agent_loop",
+      "col": 1,
+      "type": "backend",
+      "label": "컨텍스트 구성",
+      "sublabel": "필수 정보·기억·예산"
+    },
+    {
+      "id": "decide",
+      "lane": "agent_loop",
+      "col": 2,
+      "type": "backend",
+      "label": "행동 판단",
+      "sublabel": "허용 proposal 선택"
+    },
+    {
+      "id": "act",
+      "lane": "agent_loop",
+      "col": 3,
+      "type": "messagebus",
+      "label": "도구 호출",
+      "sublabel": "MCP → Backend"
+    },
+    {
+      "id": "verify",
+      "lane": "agent_loop",
+      "col": 4,
+      "type": "security",
+      "label": "결과 검증",
+      "sublabel": "영수증·확정 상태"
+    },
+    {
+      "id": "finish",
+      "lane": "agent_loop",
+      "col": 5,
+      "type": "backend",
+      "label": "실행 종료",
+      "sublabel": "APPLIED · NOOP"
+    },
+    {
+      "id": "memory",
+      "lane": "recovery",
+      "col": 1,
+      "type": "database",
+      "label": "허용된 기억",
+      "sublabel": "원장·캐시·요약안"
+    },
+    {
+      "id": "repair",
+      "lane": "recovery",
+      "col": 3,
+      "type": "backend",
+      "label": "교정·폴백",
+      "sublabel": "교정 1회 · 규칙 대체"
+    },
+    {
+      "id": "reconcile",
+      "lane": "recovery",
+      "col": 4,
+      "type": "database",
+      "label": "처리 원장 조회",
+      "sublabel": "응답 유실 대조"
+    },
+    {
+      "id": "deferred",
+      "lane": "recovery",
+      "col": 5,
+      "type": "security",
+      "label": "보류·거부 종료",
+      "sublabel": "STALE · DENIED"
+    }
+  ],
+  "edges": [
+    {
+      "from": "perceive",
+      "to": "context",
+      "label": "유효 작업"
+    },
+    {
+      "from": "context",
+      "to": "decide",
+      "label": "정보 충족"
+    },
+    {
+      "from": "decide",
+      "to": "act",
+      "label": "유효 행동"
+    },
+    {
+      "from": "act",
+      "to": "verify",
+      "label": "호출 결과"
+    },
+    {
+      "from": "verify",
+      "to": "finish",
+      "label": "적용 확인"
+    },
+    {
+      "from": "context",
+      "to": "memory",
+      "label": "기억 조회",
+      "role": "branch"
+    },
+    {
+      "from": "decide",
+      "to": "repair",
+      "label": "오류",
+      "role": "error"
+    },
+    {
+      "from": "repair",
+      "to": "act",
+      "label": "교정·대체안",
+      "role": "branch"
+    },
+    {
+      "from": "verify",
+      "to": "reconcile",
+      "label": "결과 불명",
+      "role": "branch"
+    },
+    {
+      "from": "reconcile",
+      "to": "deferred",
+      "label": "미확정 종료",
+      "role": "branch"
+    },
+    {
+      "from": "verify",
+      "to": "deferred",
+      "label": "마감·권한 거부",
+      "role": "error"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "기존 코드 기반 제안",
+      "items": [
+        "현재는 AgentOrchestrator 직접 실행",
+        "StateGraph·지속 요약은 도입 설계"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "상세 분기와 기억 반환",
+      "items": [
+        "기억 조회 결과는 컨텍스트 구성에 반환",
+        "재조회·재시도 상한은 설계서에서 정의"
+      ]
+    }
+  ]
+}

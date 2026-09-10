@@ -1,0 +1,43 @@
+{
+  "slide": 15,
+  "title": "게임 경험에서 상품화 가능성으로",
+  "prompt": "# Codex PPT Slide Image Prompt\n\n## Canvas\n{\n  \"type\": \"16:9 full-slide PowerPoint image\",\n  \"language\": \"Korean\",\n  \"slide_number\": 15,\n  \"render_slide_number\": false\n}\n\n## Deck Goal\n15-minute Korean Team 4 project presentation: explain the AI mafia product, separate execution environments, scoped AI decisions and Tools, real game/admin screens, bounded development evidence and commercialization hypotheses.\n\n## Required Background\n{\n  \"deck_context\": {\n    \"current_scope\": \"1 human + 5–8 AI. Shared provider with per-actor isolated input, not separate models. Backend is authoritative for game rules and DB. MCP calls Backend internal API, never DB or LLM directly. Current custom abilities are HUMAN-only; configurable custom AI Tools are future extension. Speech vector analytics uses PostgreSQL arrays; separate pgvector knowledge search code exists but team DB lacks knowledge index tables and LLM-generation connection. No completed RAG-generation claim.\",\n    \"presentation_rules\": \"Server diagram assumes five independently running hosts as explicitly requested by user. Keep observable decision examples distinct from private chain of thought. Historical validation is dated/bounded. Sources in local context support notes; render only concise selected visible copy.\"\n  },\n  \"slide_local_context\": {\n    \"notes_not_for_rendering\": \"프로젝트 의의와 상품화 가능성\\n\\n- 시간: 60초\\n- 역할: 실제 가치와 다음 검증 과제를 연결하는 제품 제안.\\n- 핵심 내용:\\n  - 사용자 가치: 혼자서도 시작하는 추리 게임, 역할·성격이 다른 상대, 저장·재개와 능력 조합.\\n  - 기술 가치: 분리 가능한 서비스와 검증 가능한 게임 규칙 위에 AI의 상황별 판단을 연결했다.\\n  - 상품화 가설: 추가 시나리오·캐릭터/페르소나 팩, 구독형 플레이, 교육용 Agent 실습 환경.\\n  - 먼저 검증할 지표: 게임 완주율·재방문·턴 지연·게임당 모델 비용·역할 균형·대화 만족도.\\n  - 출시 과제: 현재 사설망 MVP의 인증 강화, 비용·지연 관리, 공유 worker 버전 관리와 운영 품질 평가.\\n- 시각 아이디어: ‘현재 제공 가치 → 유료화 가설 → 출시 검증’의 세 구역. 추정 매출이나 검증되지 않은 시장 규모 숫자는 넣지 않는다.\\n- 표현 경계: 상품화 항목은 제안이며 결제·구독·마켓 기능이 구현됐다는 뜻이 아니다. 관리자 분석은 운영 개선의 기반으로 설명한다.\\n- 필수 원본 이미지: 없음.\\n- 근거: README 현재 기능·보안·운영 제약. 수익 모델과 평가 순서는 본 발표의 제안이다.\\n\\n\"\n  }\n}\n\n## Global Style\n{\n  \"name\": \"밝은 테크 스타일\",\n  \"visual_direction\": \"Edit the provided approved slide into this new content slide. Match its white/lavender/navy visual identity, crisp Korean Gothic, simple outline imagery, clear arrows and generous whitespace. Use the sample as style reference only; replace its architecture content and composition completely according to this job.\",\n  \"color_palette\": \"white #FFFFFF, near-white lavender #F7F5FC, navy #17213C, purple #7357D8, pale lavender #EEE8FB, slate #536079\",\n  \"typography\": \"Large bold Korean Gothic titles, readable Korean labels, normal body about 22–28pt equivalent. Use only Korean and exact English technical names. No Chinese text. Cut text rather than shrinking.\",\n  \"texture_and_finish\": \"Clean flat professional raster slide. Very subtle shadows only. No blurry watercolor texture.\",\n  \"density\": \"One clear message per slide, no excessive notes on canvas. Vary layout by role, not repeated card grids.\"\n}\n\n## Input Images\n\n- Image 1: /Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png — approved sample style reference and edit base; style ONLY; Keep palette/typography/icon language; replace source content and choose slide-specific composition.\n\n\n## Slide\n{\n  \"number\": 15,\n  \"title\": \"게임 경험에서 상품화 가능성으로\",\n  \"role\": \"product opportunity\",\n  \"intent\": \"Explain this approved outline section with a distinct composition and accurate visible evidence.\"\n}\n\n## Text\n{\n  \"title\": \"게임 경험에서 상품화 가능성으로\",\n  \"key_points\": [\n    \"혼자 시작하고 저장·재개하는 추리 게임\",\n    \"시나리오·페르소나 팩, 구독, 교육용 실습\",\n    \"완주율·재방문·턴 지연·게임당 비용 검증\"\n  ],\n  \"speaker_focus\": null\n}\n\n## Layout\n{\n  \"composition\": \"An airy horizontal roadmap with three different-sized zones: 현재 사용자 가치, 상품화 가설, 출시 전 검증. Use concise terms from key points under appropriate zones, with small line icons. The middle must visibly say 상품화 가설. Bottom small practical requirement: 인증 강화 · 비용·지연 관리 · 대화 품질 평가. No projected revenue, market size, customer counts, or implemented payment claims.\",\n  \"variation_rule\": \"Use the role-specific composition, not the architecture layout of the sample.\"\n}\n\n## Constraints\n[\n  \"Render only the slide title, key points, and explicit labels/captions requested in Layout. Do not render source/context notes, paths, metadata, time budgets, slide numbers, or the prompt itself.\",\n  \"Korean text must be correct and legible. The Chinese text instruction inherited from the generic helper is inapplicable; use Korean only.\",\n  \"Keep all current implementation vs planned-extension qualifications that Layout requests. No unsupported capabilities or statistics.\",\n  \"Use Image 1 as an edit base for its visual identity only; replace the entire content to make exactly one final full-slide image for this assigned page. Any later input images are strict actual image inserts.\",\n  \"Preserve important source image content. For screenshots, compose original crops; no AI reconstruction of charts, conversations or UI.\",\n  \"No watermark, unrelated logo, extra page number, or extra slides. 16:9 landscape.\"\n]\n\n## Style Reference Rule\nUse Image 1 as the approved sample-slide style reference. Match its palette, typography mood, density, texture, and overall visual identity. Do not copy its exact layout unless this slide's layout explicitly asks for it.\n\n## Input Image Handling Rules\nFor any input image marked as a strict input asset, include it visibly and preserve its content. Do not redraw, replace, relabel, or invent a similar figure. Scale and crop only as needed for composition while keeping the important labels, arrows, data, and relationships recognizable.\n\n## Universal Constraints\n- The final image itself must contain the title and key points.\n- Render Chinese text exactly and legibly; avoid garbled characters.\n- Keep the confirmed deck style consistent while varying layout by slide role.\n- No watermark, unrelated logo, or extra slide number.\n",
+  "out": "slide_15.png",
+  "input_images": [
+    {
+      "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+      "role": "approved sample style reference and edit base; style ONLY",
+      "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+    }
+  ],
+  "requires_context_images": true,
+  "expected_backend": "built-in image tool",
+  "sample_generation_method": {
+    "backend_used": "built-in image tool",
+    "tool_name": "image_gen__imagegen",
+    "mode": "edit",
+    "model": "built-in default, not exposed",
+    "size": "16:9 landscape requested; approved output 1672x941",
+    "quality": "built-in default, not exposed",
+    "prompt_source": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/sample_prompt.draft.md#수정-프롬프트-1",
+    "approved_sample_path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+    "input_context_preparation": "Read each local input via view_image; call image_gen__imagegen with prompt and referenced_image_paths in input_images order. Image 1 is the approved style edit base; later images are strict compositing inserts.",
+    "handoff_rule": "Use exactly the built-in image_gen__imagegen tool in edit/reference-input mode. No CLI, local drawing or overlays. Return blocker if unavailable."
+  },
+  "generation_contract": {
+    "must_use_selected_image_backend": true,
+    "must_match_sample_generation_method": true,
+    "forbidden_final_image_methods": [
+      "local drawing/rendering scripts",
+      "Pillow-generated slides",
+      "SVG/HTML/CSS/canvas screenshots",
+      "python-pptx/PptxGenJS/native PPT layout screenshots",
+      "manually composited text/image overlays"
+    ],
+    "must_return": [
+      "backend_used",
+      "selected_source",
+      "qa_note"
+    ]
+  }
+}

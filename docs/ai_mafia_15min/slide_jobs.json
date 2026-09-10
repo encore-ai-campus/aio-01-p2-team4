@@ -1,0 +1,693 @@
+{
+  "run_status": "slides_recorded",
+  "deck_name": "ai_mafia_15min",
+  "selected_backend": "built-in image tool",
+  "sample_generation_method": {
+    "backend_used": "built-in image tool",
+    "tool_name": "image_gen__imagegen",
+    "mode": "edit",
+    "model": "built-in default, not exposed",
+    "size": "16:9 landscape requested; approved output 1672x941",
+    "quality": "built-in default, not exposed",
+    "prompt_source": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/sample_prompt.draft.md#수정-프롬프트-1",
+    "approved_sample_path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+    "input_context_preparation": "Read each local input via view_image; call image_gen__imagegen with prompt and referenced_image_paths in input_images order. Image 1 is the approved style edit base; later images are strict compositing inserts.",
+    "handoff_rule": "Use exactly the built-in image_gen__imagegen tool in edit/reference-input mode. No CLI, local drawing or overlays. Return blocker if unavailable."
+  },
+  "max_concurrent_slides": 3,
+  "slides": [
+    {
+      "slide_id": "slide_01",
+      "number": 1,
+      "title": "AI MAFIA",
+      "job": "prompts/slide_01.json",
+      "out": "origin_image/slide_01.png",
+      "input_images": [
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+          "role": "approved sample style reference and edit base; style ONLY",
+          "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+        },
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/frontend_user/assets/main.png",
+          "role": "strict input asset; actual project art or real application screenshot",
+          "fidelity": "Preserve the original visual content, Korean text, numerical values, selected options, axes, colors and dialogue. Include visibly as an actual image insert; never redraw or synthesize a similar replacement."
+        }
+      ],
+      "requires_context_images": true,
+      "status": "recorded",
+      "dispatch": {
+        "agent_id": "/root/slide_01",
+        "agent_nickname": null,
+        "prompt": "prompts/slide_01.json",
+        "prompt_sha256": "adb7f8a535e2f9dcc7991011f4ed83180e989c8bf406457e17ae94a5c37014e9",
+        "dispatched_at": "2026-09-09T01:45:36Z"
+      },
+      "result": {
+        "agent_id": "/root/slide_01",
+        "backend_used": "built-in image tool",
+        "selected_source": "/Users/shsmac/.codex/generated_images/01a083ca-3a35-7a41-8ec5-63976598ba72/exec-ab7437dd-947f-4e82-b638-0a46b386038c.png",
+        "selected_source_sha256": "c6e40d3468ddaa3d4a2bd72e9c3440dbb516254fa1280d8bd956b8bd3ddbfcbc",
+        "final_image": "origin_image/slide_01.png",
+        "final_image_sha256": "c6e40d3468ddaa3d4a2bd72e9c3440dbb516254fa1280d8bd956b8bd3ddbfcbc",
+        "expected_backend": "built-in image tool",
+        "expected_backend_labels": [
+          "built-in image tool",
+          "image_gen__imagegen"
+        ],
+        "sample_generation_method_matched": true,
+        "qa_note": "한국어 표지 문구와 프로젝트 파노라마·캐릭터를 확인했습니다.",
+        "recorded_at": "2026-09-09T01:45:36Z"
+      },
+      "blocker": null
+    },
+    {
+      "slide_id": "slide_02",
+      "number": 2,
+      "title": "왜 마피아 게임인가",
+      "job": "prompts/slide_02.json",
+      "out": "origin_image/slide_02.png",
+      "input_images": [
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+          "role": "approved sample style reference and edit base; style ONLY",
+          "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+        }
+      ],
+      "requires_context_images": true,
+      "status": "recorded",
+      "dispatch": {
+        "agent_id": "/root/slide_02",
+        "agent_nickname": null,
+        "prompt": "prompts/slide_02.json",
+        "prompt_sha256": "8563c29e4cdf0eda708361c16aade6a897a1919a8248e8108ce0675821654742",
+        "dispatched_at": "2026-09-09T01:45:37Z"
+      },
+      "result": {
+        "agent_id": "/root/slide_02",
+        "backend_used": "built-in image tool",
+        "selected_source": "/Users/shsmac/.codex/generated_images/01a083cd-94cb-71e2-bd64-9273881092b6/exec-d561d702-13b1-455e-9eca-3fda98c54786.png",
+        "selected_source_sha256": "461263d58b5dc2dd28effa0ac6455885b635baf8f0b261e2d165ce8a7eb721f7",
+        "final_image": "origin_image/slide_02.png",
+        "final_image_sha256": "461263d58b5dc2dd28effa0ac6455885b635baf8f0b261e2d165ce8a7eb721f7",
+        "expected_backend": "built-in image tool",
+        "expected_backend_labels": [
+          "built-in image tool",
+          "image_gen__imagegen"
+        ],
+        "sample_generation_method_matched": true,
+        "qa_note": "선정 이유 세 가지와 삼각형 도식, 한글 가독성을 확인했습니다.",
+        "recorded_at": "2026-09-09T01:45:37Z"
+      },
+      "blocker": null
+    },
+    {
+      "slide_id": "slide_03",
+      "number": 3,
+      "title": "기존 플레이의 제약을 어떻게 보완했나",
+      "job": "prompts/slide_03.json",
+      "out": "origin_image/slide_03.png",
+      "input_images": [
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+          "role": "approved sample style reference and edit base; style ONLY",
+          "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+        }
+      ],
+      "requires_context_images": true,
+      "status": "recorded",
+      "dispatch": {
+        "agent_id": "/root/slide_03",
+        "agent_nickname": null,
+        "prompt": "prompts/slide_03.json",
+        "prompt_sha256": "79d1a7bd53fc5014e581cd2f94637807461203417ff5140575a963c5a51dc307",
+        "dispatched_at": "2026-09-09T01:45:37Z"
+      },
+      "result": {
+        "agent_id": "/root/slide_03",
+        "backend_used": "built-in image tool",
+        "selected_source": "/Users/shsmac/.codex/generated_images/01a083cd-c7d9-7550-883b-d717a1ea45d9/exec-0b12b1b0-defd-4a38-97ed-1c1b915ee54d.png",
+        "selected_source_sha256": "cbd6cbfa64978cf19c24132a1ab46cfb91905db767c299fd42a77bae2a5cb2e5",
+        "final_image": "origin_image/slide_03.png",
+        "final_image_sha256": "cbd6cbfa64978cf19c24132a1ab46cfb91905db767c299fd42a77bae2a5cb2e5",
+        "expected_backend": "built-in image tool",
+        "expected_backend_labels": [
+          "built-in image tool",
+          "image_gen__imagegen"
+        ],
+        "sample_generation_method_matched": true,
+        "qa_note": "문제와 해결의 세 행 대응, 팀의 문제 정의라는 한정, 문구와 배치를 확인했습니다.",
+        "recorded_at": "2026-09-09T01:45:37Z"
+      },
+      "blocker": null
+    },
+    {
+      "slide_id": "slide_04",
+      "number": 4,
+      "title": "실제 플레이는 역할 확인에서 시작됩니다",
+      "job": "prompts/slide_04.json",
+      "out": "origin_image/slide_04.png",
+      "input_images": [
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+          "role": "approved sample style reference and edit base; style ONLY",
+          "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+        },
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/assets/screenshots/home.jpg",
+          "role": "strict input asset; actual project art or real application screenshot",
+          "fidelity": "Preserve the original visual content, Korean text, numerical values, selected options, axes, colors and dialogue. Include visibly as an actual image insert; never redraw or synthesize a similar replacement."
+        },
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/assets/screenshots/role_reveal.jpg",
+          "role": "strict input asset; actual project art or real application screenshot",
+          "fidelity": "Preserve the original visual content, Korean text, numerical values, selected options, axes, colors and dialogue. Include visibly as an actual image insert; never redraw or synthesize a similar replacement."
+        }
+      ],
+      "requires_context_images": true,
+      "status": "recorded",
+      "dispatch": {
+        "agent_id": "/root/slide_04",
+        "agent_nickname": null,
+        "prompt": "prompts/slide_04.json",
+        "prompt_sha256": "9a621cc03efc2bf63b4e69abdfcad7e8da4ab70f3bd45a59e0920684e1357785",
+        "dispatched_at": "2026-09-09T01:45:37Z"
+      },
+      "result": {
+        "agent_id": "/root/slide_04",
+        "backend_used": "built-in image tool",
+        "selected_source": "/Users/shsmac/.codex/generated_images/01a083c5-6aeb-7033-a869-a88fdb85196f/exec-5eeadad5-53f9-41d7-86ef-df8aa136b737.png",
+        "selected_source_sha256": "ea1acd5349eeffb3f68cc94248d741f09f1e50210b65dde6803bebcdd9e2a6c9",
+        "final_image": "origin_image/slide_04.png",
+        "final_image_sha256": "ea1acd5349eeffb3f68cc94248d741f09f1e50210b65dde6803bebcdd9e2a6c9",
+        "expected_backend": "built-in image tool",
+        "expected_backend_labels": [
+          "built-in image tool",
+          "image_gen__imagegen"
+        ],
+        "sample_generation_method_matched": true,
+        "qa_note": "제목·캡션·게임 흐름 정확. 사용자 승인에 따라 화면 영역을 원본 JPEG의 PPT 이미지로 교체해야 합니다.",
+        "recorded_at": "2026-09-09T01:45:37Z"
+      },
+      "blocker": null
+    },
+    {
+      "slide_id": "slide_05",
+      "number": 5,
+      "title": "다섯 시스템, 다섯 개의 독립 서버",
+      "job": "prompts/slide_05.json",
+      "out": "origin_image/slide_05.png",
+      "input_images": [
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+          "role": "approved sample style reference and edit base; style ONLY",
+          "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+        }
+      ],
+      "requires_context_images": true,
+      "status": "accepted",
+      "dispatch": null,
+      "result": {
+        "final_image": "origin_image/slide_05.png",
+        "accepted_sample": true
+      },
+      "blocker": null
+    },
+    {
+      "slide_id": "slide_06",
+      "number": 6,
+      "title": "Agent는 정보를 읽고, 허용된 행동을 제안합니다",
+      "job": "prompts/slide_06.json",
+      "out": "origin_image/slide_06.png",
+      "input_images": [
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+          "role": "approved sample style reference and edit base; style ONLY",
+          "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+        }
+      ],
+      "requires_context_images": true,
+      "status": "recorded",
+      "dispatch": {
+        "agent_id": "/root/slide_06",
+        "agent_nickname": null,
+        "prompt": "prompts/slide_06.json",
+        "prompt_sha256": "1ae879536816fee5a55407a73bc81f292d7158f4e47e42e49ed05aa661acb688",
+        "dispatched_at": "2026-09-09T01:45:37Z"
+      },
+      "result": {
+        "agent_id": "/root/slide_06",
+        "backend_used": "built-in image tool",
+        "selected_source": "/Users/shsmac/.codex/generated_images/01a083ce-0369-7441-a4d8-066a77c14dfa/exec-27bb842b-e335-4da1-95ea-c5e3bb32cbee.png",
+        "selected_source_sha256": "7686165fb1957b6e41e658531a2b69b0a2349599a61b563c1cc691fd7441616c",
+        "final_image": "origin_image/slide_06.png",
+        "final_image_sha256": "7686165fb1957b6e41e658531a2b69b0a2349599a61b563c1cc691fd7441616c",
+        "expected_backend": "built-in image tool",
+        "expected_backend_labels": [
+          "built-in image tool",
+          "image_gen__imagegen"
+        ],
+        "sample_generation_method_matched": true,
+        "qa_note": "Resource·Prompt·Tool 역할, 도구명 3개, 인간 전용 범위와 Backend 검증을 확인했습니다.",
+        "recorded_at": "2026-09-09T01:45:37Z"
+      },
+      "blocker": null
+    },
+    {
+      "slide_id": "slide_07",
+      "number": 7,
+      "title": "한 AI의 판단이 게임에 반영되는 과정",
+      "job": "prompts/slide_07.json",
+      "out": "origin_image/slide_07.png",
+      "input_images": [
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+          "role": "approved sample style reference and edit base; style ONLY",
+          "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+        }
+      ],
+      "requires_context_images": true,
+      "status": "recorded",
+      "dispatch": {
+        "agent_id": "/root/slide_07",
+        "agent_nickname": null,
+        "prompt": "prompts/slide_07.json",
+        "prompt_sha256": "dcb3550e3470ada5954a6accb7d78f4c965854ccd17b2b901f872996bb8238b8",
+        "dispatched_at": "2026-09-09T01:45:37Z"
+      },
+      "result": {
+        "agent_id": "/root/slide_07",
+        "backend_used": "built-in image tool",
+        "selected_source": "/Users/shsmac/.codex/generated_images/01a083d0-2741-7c30-8483-42b827a3b478/exec-2bc1f860-20e2-44f1-9d77-df19f8cae8b0.png",
+        "selected_source_sha256": "52b5841b30d94582983f1ae5173d2445c5abbd215d257909195f1852eb31e9ad",
+        "final_image": "origin_image/slide_07.png",
+        "final_image_sha256": "52b5841b30d94582983f1ae5173d2445c5abbd215d257909195f1852eb31e9ad",
+        "expected_backend": "built-in image tool",
+        "expected_backend_labels": [
+          "built-in image tool",
+          "image_gen__imagegen"
+        ],
+        "sample_generation_method_matched": true,
+        "qa_note": "한국어 가독성, 다섯 단계의 순환 방향, 판단당 행동 하나, 내부 추론 원문이 아닌 설명용 예시 표기를 확인했습니다.",
+        "recorded_at": "2026-09-09T01:45:37Z"
+      },
+      "blocker": null
+    },
+    {
+      "slide_id": "slide_08",
+      "number": 8,
+      "title": "같은 대화에도 서로 다르게 반응합니다",
+      "job": "prompts/slide_08.json",
+      "out": "origin_image/slide_08.png",
+      "input_images": [
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+          "role": "approved sample style reference and edit base; style ONLY",
+          "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+        },
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/assets/screenshots/game_discussion.jpg",
+          "role": "strict input asset; actual project art or real application screenshot",
+          "fidelity": "Preserve the original visual content, Korean text, numerical values, selected options, axes, colors and dialogue. Include visibly as an actual image insert; never redraw or synthesize a similar replacement."
+        },
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/assets/screenshots/game_chat.jpg",
+          "role": "strict input asset; actual project art or real application screenshot",
+          "fidelity": "Preserve the original visual content, Korean text, numerical values, selected options, axes, colors and dialogue. Include visibly as an actual image insert; never redraw or synthesize a similar replacement."
+        }
+      ],
+      "requires_context_images": true,
+      "status": "recorded",
+      "dispatch": {
+        "agent_id": "/root/slide_08",
+        "agent_nickname": null,
+        "prompt": "prompts/slide_08.json",
+        "prompt_sha256": "18b43504f2302cac7202c5dc53f3d8c84d4091075183fae0cad4907df4cd55fc",
+        "dispatched_at": "2026-09-09T01:45:37Z"
+      },
+      "result": {
+        "agent_id": "/root/slide_08",
+        "backend_used": "built-in image tool",
+        "selected_source": "/Users/shsmac/.codex/generated_images/01a083c8-b4c3-7541-9847-3c9f48c5cdde/exec-b97d0205-8d99-45fd-912b-a4b4a50ff797.png",
+        "selected_source_sha256": "bd11ee7072de1a6c85f497e4d52bfbbef130e56ee440a07fd3cd81978f5c6c9c",
+        "final_image": "origin_image/slide_08.png",
+        "final_image_sha256": "bd11ee7072de1a6c85f497e4d52bfbbef130e56ee440a07fd3cd81978f5c6c9c",
+        "expected_backend": "built-in image tool",
+        "expected_backend_labels": [
+          "built-in image tool",
+          "image_gen__imagegen"
+        ],
+        "sample_generation_method_matched": true,
+        "qa_note": "제목·캡션·하단 문구 정확. 사용자 승인에 따라 화면 영역을 원본 JPEG의 PPT 이미지로 교체해야 합니다.",
+        "recorded_at": "2026-09-09T01:45:37Z"
+      },
+      "blocker": null
+    },
+    {
+      "slide_id": "slide_09",
+      "number": 9,
+      "title": "커스텀게임: 능력을 조합하는 사용자",
+      "job": "prompts/slide_09.json",
+      "out": "origin_image/slide_09.png",
+      "input_images": [
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+          "role": "approved sample style reference and edit base; style ONLY",
+          "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+        },
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/assets/screenshots/custom_role_setup.jpg",
+          "role": "strict input asset; actual project art or real application screenshot",
+          "fidelity": "Preserve the original visual content, Korean text, numerical values, selected options, axes, colors and dialogue. Include visibly as an actual image insert; never redraw or synthesize a similar replacement."
+        },
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/assets/screenshots/custom_role.jpg",
+          "role": "strict input asset; actual project art or real application screenshot",
+          "fidelity": "Preserve the original visual content, Korean text, numerical values, selected options, axes, colors and dialogue. Include visibly as an actual image insert; never redraw or synthesize a similar replacement."
+        }
+      ],
+      "requires_context_images": true,
+      "status": "recorded",
+      "dispatch": {
+        "agent_id": "/root/slide_09",
+        "agent_nickname": null,
+        "prompt": "prompts/slide_09.json",
+        "prompt_sha256": "70d9ea62d30d11a1d41af50e7fce21a7380a5d0e7d65aae1d2a82307f082ccaa",
+        "dispatched_at": "2026-09-09T01:45:38Z"
+      },
+      "result": {
+        "agent_id": "/root/slide_09",
+        "backend_used": "built-in image tool",
+        "selected_source": "/Users/shsmac/.codex/generated_images/01a083c5-a2c9-7793-a1d4-dbce65faca18/exec-871e3751-c2bb-4663-8ad4-567977ddafa0.png",
+        "selected_source_sha256": "885cedba90ce7bd5682f54f35d21c4c7b93a0905be39fe6440f14ca7e6fd4446",
+        "final_image": "origin_image/slide_09.png",
+        "final_image_sha256": "885cedba90ce7bd5682f54f35d21c4c7b93a0905be39fe6440f14ca7e6fd4446",
+        "expected_backend": "built-in image tool",
+        "expected_backend_labels": [
+          "built-in image tool",
+          "image_gen__imagegen"
+        ],
+        "sample_generation_method_matched": true,
+        "qa_note": "첫 밤 이후 특수 직업 열람의 본문을 다른 탐정·의사의 직업으로 수정한 후보를 확인했습니다. 원본 화면 두 개는 사용자 승인에 따라 PPT 조립 단계에서 직접 삽입합니다.",
+        "recorded_at": "2026-09-09T01:48:25Z"
+      },
+      "blocker": null
+    },
+    {
+      "slide_id": "slide_10",
+      "number": 10,
+      "title": "Workflow와 Agent는 확장 방식이 다릅니다",
+      "job": "prompts/slide_10.json",
+      "out": "origin_image/slide_10.png",
+      "input_images": [
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+          "role": "approved sample style reference and edit base; style ONLY",
+          "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+        }
+      ],
+      "requires_context_images": true,
+      "status": "recorded",
+      "dispatch": {
+        "agent_id": "/root/slide_10",
+        "agent_nickname": null,
+        "prompt": "prompts/slide_10.json",
+        "prompt_sha256": "5714926b20a13b6c89c6811913b133942298b65aa25e00fc1d2cc7630c4684e0",
+        "dispatched_at": "2026-09-09T01:45:37Z"
+      },
+      "result": {
+        "agent_id": "/root/slide_10",
+        "backend_used": "built-in image tool",
+        "selected_source": "/Users/shsmac/.codex/generated_images/01a083d0-556c-7331-befd-7bb0f6d587e5/exec-a371b994-2cca-4a38-84fd-b2392f0d0ffb.png",
+        "selected_source_sha256": "b7f09734d34065cb6497da81ac40140035e709d3e07a2f796905c3d519263fd2",
+        "final_image": "origin_image/slide_10.png",
+        "final_image_sha256": "b7f09734d34065cb6497da81ac40140035e709d3e07a2f796905c3d519263fd2",
+        "expected_backend": "built-in image tool",
+        "expected_backend_labels": [
+          "built-in image tool",
+          "image_gen__imagegen"
+        ],
+        "sample_generation_method_matched": true,
+        "qa_note": "고정 분기와 상황별 선택 비교, 후속 AI Tool 구성 예시, 현재 제한된 판단 범위와 신규 도구 검증 필요성을 확인했습니다.",
+        "recorded_at": "2026-09-09T01:45:38Z"
+      },
+      "blocker": null
+    },
+    {
+      "slide_id": "slide_11",
+      "number": 11,
+      "title": "관리자 화면과 벡터 분석·RAG 확장",
+      "job": "prompts/slide_11.json",
+      "out": "origin_image/slide_11.png",
+      "input_images": [
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+          "role": "approved sample style reference and edit base; style ONLY",
+          "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+        },
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/assets/screenshots/admin_overview.jpg",
+          "role": "strict input asset; actual project art or real application screenshot",
+          "fidelity": "Preserve the original visual content, Korean text, numerical values, selected options, axes, colors and dialogue. Include visibly as an actual image insert; never redraw or synthesize a similar replacement."
+        },
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/assets/screenshots/admin_speech_analytics.jpg",
+          "role": "strict input asset; actual project art or real application screenshot",
+          "fidelity": "Preserve the original visual content, Korean text, numerical values, selected options, axes, colors and dialogue. Include visibly as an actual image insert; never redraw or synthesize a similar replacement."
+        }
+      ],
+      "requires_context_images": true,
+      "status": "recorded",
+      "dispatch": {
+        "agent_id": "/root/slide_11",
+        "agent_nickname": null,
+        "prompt": "prompts/slide_11.json",
+        "prompt_sha256": "fa479b6e14fd5a126bb57e5ee47d8936a8cdc649aa49560740399e8a0f819ed6",
+        "dispatched_at": "2026-09-09T01:45:38Z"
+      },
+      "result": {
+        "agent_id": "/root/slide_11",
+        "backend_used": "built-in image tool",
+        "selected_source": "/Users/shsmac/.codex/generated_images/01a083c5-db17-7b52-acef-343c3b5c749c/exec-8db434fc-4741-4105-bf0c-facbacf2fa96.png",
+        "selected_source_sha256": "1858cf93ede73c572ceafd2a520e90243b5cc1aa8029a1ba199ac96a5e83cb4d",
+        "final_image": "origin_image/slide_11.png",
+        "final_image_sha256": "1858cf93ede73c572ceafd2a520e90243b5cc1aa8029a1ba199ac96a5e83cb4d",
+        "expected_backend": "built-in image tool",
+        "expected_backend_labels": [
+          "built-in image tool",
+          "image_gen__imagegen"
+        ],
+        "sample_generation_method_matched": true,
+        "qa_note": "현재 발언 벡터 분석·후속 RAG 설명 정확. 실제 KPI·차트는 원본 JPEG로 전체 교체해야 합니다.",
+        "recorded_at": "2026-09-09T01:45:38Z"
+      },
+      "blocker": null
+    },
+    {
+      "slide_id": "slide_12",
+      "number": 12,
+      "title": "자동 투표 문제를 병렬 제출로 해결",
+      "job": "prompts/slide_12.json",
+      "out": "origin_image/slide_12.png",
+      "input_images": [
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+          "role": "approved sample style reference and edit base; style ONLY",
+          "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+        }
+      ],
+      "requires_context_images": true,
+      "status": "recorded",
+      "dispatch": {
+        "agent_id": "/root/slide_12",
+        "agent_nickname": null,
+        "prompt": "prompts/slide_12.json",
+        "prompt_sha256": "8598c6565e9fa303525f5907d0a66b3da99497f54b6469bc3e74be59a7d09790",
+        "dispatched_at": "2026-09-09T01:45:38Z"
+      },
+      "result": {
+        "agent_id": "/root/slide_12",
+        "backend_used": "built-in image tool",
+        "selected_source": "/Users/shsmac/.codex/generated_images/01a083d1-ba69-79c2-b22e-f824025c9f9e/exec-af25bf64-4aa7-4efc-aad3-ad104d2c4f9b.png",
+        "selected_source_sha256": "577661293d69efc3a55f46edf734f64cebc0517348d06bc87f327cce80c1fdee",
+        "final_image": "origin_image/slide_12.png",
+        "final_image_sha256": "577661293d69efc3a55f46edf734f64cebc0517348d06bc87f327cce80c1fdee",
+        "expected_backend": "built-in image tool",
+        "expected_backend_labels": [
+          "built-in image tool",
+          "image_gen__imagegen"
+        ],
+        "sample_generation_method_matched": true,
+        "qa_note": "병렬 판단과 개별 저장 흐름, 과거 45표 중 AUTO 28표와 별도 검증 AGENT 13표·AUTO 0표의 관찰 범위, 저장 시간 및 한국어 가독성을 확인했습니다.",
+        "recorded_at": "2026-09-09T01:45:38Z"
+      },
+      "blocker": null
+    },
+    {
+      "slide_id": "slide_13",
+      "number": 13,
+      "title": "실시간 화면 갱신과 입력을 분리했습니다",
+      "job": "prompts/slide_13.json",
+      "out": "origin_image/slide_13.png",
+      "input_images": [
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+          "role": "approved sample style reference and edit base; style ONLY",
+          "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+        }
+      ],
+      "requires_context_images": true,
+      "status": "recorded",
+      "dispatch": {
+        "agent_id": "/root/slide_13",
+        "agent_nickname": null,
+        "prompt": "prompts/slide_13.json",
+        "prompt_sha256": "587db7db24669bf35fa1737b9d593ba815831b3c3c61985ce78d343508bb6b46",
+        "dispatched_at": "2026-09-09T01:45:38Z"
+      },
+      "result": {
+        "agent_id": "/root/slide_13",
+        "backend_used": "built-in image tool",
+        "selected_source": "/Users/shsmac/.codex/generated_images/01a083d2-7e85-7322-9fbe-d583d91dfce6/exec-9c801347-5426-4668-bca3-af238213e6b5.png",
+        "selected_source_sha256": "8b50de4e8275ebcae62a634f00d708f51ce2d03dc38aace7e612b5469203ef53",
+        "final_image": "origin_image/slide_13.png",
+        "final_image_sha256": "8b50de4e8275ebcae62a634f00d708f51ce2d03dc38aace7e612b5469203ef53",
+        "expected_backend": "built-in image tool",
+        "expected_backend_labels": [
+          "built-in image tool",
+          "image_gen__imagegen"
+        ],
+        "sample_generation_method_matched": true,
+        "qa_note": "입력과 갱신의 분리, FIFO·같은 멱등 키·세션 범위, 과거 10건 검증과 날짜, 제목·도식의 가독성을 확인했습니다.",
+        "recorded_at": "2026-09-09T01:45:38Z"
+      },
+      "blocker": null
+    },
+    {
+      "slide_id": "slide_14",
+      "number": 14,
+      "title": "반복 질문을 줄이기 위한 문맥 설계",
+      "job": "prompts/slide_14.json",
+      "out": "origin_image/slide_14.png",
+      "input_images": [
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+          "role": "approved sample style reference and edit base; style ONLY",
+          "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+        }
+      ],
+      "requires_context_images": true,
+      "status": "recorded",
+      "dispatch": {
+        "agent_id": "/root/slide_14",
+        "agent_nickname": null,
+        "prompt": "prompts/slide_14.json",
+        "prompt_sha256": "c3a56021aa8f682c83c53f6fd80c6fb816c58c5dc9e9e122e446e28a60efe2ca",
+        "dispatched_at": "2026-09-09T01:45:38Z"
+      },
+      "result": {
+        "agent_id": "/root/slide_14",
+        "backend_used": "built-in image tool",
+        "selected_source": "/Users/shsmac/.codex/generated_images/01a083d4-afa4-7e11-adc4-d230e9eccd90/exec-1526aec2-a09e-439b-8704-1be2fcd49cad.png",
+        "selected_source_sha256": "82cd56dadeaf3ee69ab4a77f5ded710f4aef8efd304d69084b1d431c1e64e3ba",
+        "final_image": "origin_image/slide_14.png",
+        "final_image_sha256": "82cd56dadeaf3ee69ab4a77f5ded710f4aef8efd304d69084b1d431c1e64e3ba",
+        "expected_backend": "built-in image tool",
+        "expected_backend_labels": [
+          "built-in image tool",
+          "image_gen__imagegen"
+        ],
+        "sample_generation_method_matched": true,
+        "qa_note": "대화 문맥 선별·역할별 지침·추가 플레이 평가의 흐름과 한국어를 확인했으며, 미측정 대화 품질을 성과로 단정하지 않았습니다.",
+        "recorded_at": "2026-09-09T01:45:38Z"
+      },
+      "blocker": null
+    },
+    {
+      "slide_id": "slide_15",
+      "number": 15,
+      "title": "게임 경험에서 상품화 가능성으로",
+      "job": "prompts/slide_15.json",
+      "out": "origin_image/slide_15.png",
+      "input_images": [
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+          "role": "approved sample style reference and edit base; style ONLY",
+          "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+        }
+      ],
+      "requires_context_images": true,
+      "status": "recorded",
+      "dispatch": {
+        "agent_id": "/root/slide_15",
+        "agent_nickname": null,
+        "prompt": "prompts/slide_15.json",
+        "prompt_sha256": "c8e36e8e9b91b83983772889a084cba6e0a18328264c210c0f7d300e70eae45d",
+        "dispatched_at": "2026-09-09T01:45:38Z"
+      },
+      "result": {
+        "agent_id": "/root/slide_15",
+        "backend_used": "built-in image tool",
+        "selected_source": "/Users/shsmac/.codex/generated_images/01a083d4-de72-7431-a21f-e76613cf900c/exec-191d544d-a7d9-410e-b847-117753781835.png",
+        "selected_source_sha256": "0a02ccfdf60b841968baad16d7c3b31ecc97d9c94344cdbe2e3500ec31d537e6",
+        "final_image": "origin_image/slide_15.png",
+        "final_image_sha256": "0a02ccfdf60b841968baad16d7c3b31ecc97d9c94344cdbe2e3500ec31d537e6",
+        "expected_backend": "built-in image tool",
+        "expected_backend_labels": [
+          "built-in image tool",
+          "image_gen__imagegen"
+        ],
+        "sample_generation_method_matched": true,
+        "qa_note": "상품화 가설과 출시 전 검증을 구분하고, 가독성·일관된 스타일·겹침과 잘림이 없는 배치를 확인했습니다.",
+        "recorded_at": "2026-09-09T01:45:38Z"
+      },
+      "blocker": null
+    },
+    {
+      "slide_id": "slide_16",
+      "number": 16,
+      "title": "AI의 판단을 게임으로 연결했습니다",
+      "job": "prompts/slide_16.json",
+      "out": "origin_image/slide_16.png",
+      "input_images": [
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/docs/ai_mafia_15min/origin_image/slide_05.png",
+          "role": "approved sample style reference and edit base; style ONLY",
+          "fidelity": "Keep palette/typography/icon language; replace source content and choose slide-specific composition."
+        },
+        {
+          "path": "/Users/shsmac/encore_proj/Team4_Proj_0831/frontend_user/assets/main.png",
+          "role": "strict input asset; actual project art or real application screenshot",
+          "fidelity": "Preserve the original visual content, Korean text, numerical values, selected options, axes, colors and dialogue. Include visibly as an actual image insert; never redraw or synthesize a similar replacement."
+        }
+      ],
+      "requires_context_images": true,
+      "status": "recorded",
+      "dispatch": {
+        "agent_id": "/root/slide_16",
+        "agent_nickname": null,
+        "prompt": "prompts/slide_16.json",
+        "prompt_sha256": "e0a2e6b86edb62da1ca8dcc7d90cb3f570258d2bf04fddfc259be4194b2aec04",
+        "dispatched_at": "2026-09-09T01:45:38Z"
+      },
+      "result": {
+        "agent_id": "/root/slide_16",
+        "backend_used": "built-in image tool",
+        "selected_source": "/Users/shsmac/.codex/generated_images/01a083d5-ed49-7d40-9435-36b10d025114/exec-84684832-07ba-4b70-9d30-a8f9f56c0e9e.png",
+        "selected_source_sha256": "aecf6394b162bbabb7fca67e15c0d467de6aa6e4c007e27fb85a0937844a8a3d",
+        "final_image": "origin_image/slide_16.png",
+        "final_image_sha256": "aecf6394b162bbabb7fca67e15c0d467de6aa6e4c007e27fb85a0937844a8a3d",
+        "expected_backend": "built-in image tool",
+        "expected_backend_labels": [
+          "built-in image tool",
+          "image_gen__imagegen"
+        ],
+        "sample_generation_method_matched": true,
+        "qa_note": "마무리 핵심 문장과 향후 확장 표시, 프로젝트 캐릭터 7명, 제목·본문의 가독성과 배치를 확인했습니다.",
+        "recorded_at": "2026-09-09T01:46:58Z"
+      },
+      "blocker": null
+    }
+  ],
+  "updated_at": "2026-09-09T01:48:25Z"
+}
