@@ -10,7 +10,7 @@
 
 **1 HUMAN + 5–8 AI** · **5 SCENARIOS** · **CUSTOM ROLES**
 
-[독립적인 판단](#agents) · [시스템 관계도](#system) · [MCP 도구](#mcp) · [빠른 실행](#quick-start) · [Docker 배포](#docker-deployment) · [개발 안내](#development)
+[핵심 설계](#design) · [ERD](docs/arrangement/01_DB_REDIS_DESIGN.md#3-논리-데이터-구조) · [독립적인 판단](#agents) · [시스템 관계도](#system) · [MCP 도구](#mcp) · [빠른 실행](#quick-start) · [Docker 배포](#docker-deployment) · [개발 안내](#development)
 
 </div>
 
@@ -32,6 +32,46 @@
 참조하며, 문제 정의·사용자 가치·MVP 범위는 [프로젝트 기획서](docs/arrangement/00_AI_MAFIA_PROJECT_PROPOSAL.md)에,
 Agent의 실행·검증 결과와 한계는 [에이전트 시험 결과 보고서](docs/arrangement/07_AGENT_TEST_RESULT_REPORT.md)에,
 계획에서 실제 구현·오류 개선·통합 검증까지의 흐름은 [프로젝트 수행과정 보고서](docs/arrangement/08_PROJECT_EXECUTION_REPORT.md)에 정리합니다.
+
+<a id="design"></a>
+
+## 00 · 핵심 설계 한눈에 보기
+
+> **한 줄 원칙:** Front와 AI는 행동을 요청하거나 제안하고, Backend가 규칙과 권한을
+> 검증하며, PostgreSQL transaction이 게임의 최종 상태를 확정합니다.
+
+| 🎮 **제품·게임** | 🗃️ **데이터·ERD** | 🔌 **API·동기화** |
+| :--- | :--- | :--- |
+| [공통 마스터플랜](docs/개발상세플랜/01_core/AI_MAFIA_MASTER_PLAN.md) · [게임 엔진·시나리오 설계](docs/arrangement/04_GAME_ENGINE_SCENARIO_DESIGN.md) | [핵심 논리 ERD](docs/arrangement/01_DB_REDIS_DESIGN.md#3-논리-데이터-구조) · [DB·Redis 정본](docs/개발상세플랜/02_backend_data/AI_MAFIA_DB_DESIGN.md) | [API 설계 요약](docs/arrangement/02_API_DESIGN.md) · [API 명세 정본](docs/개발상세플랜/01_core/AI_MAFIA_API_SPEC.md) |
+| 6~9인 역할 구성, 5개 사건, STANDARD·CUSTOM_ROLE, phase·승패 규칙 | PostgreSQL 원장, Redis 파생 cache·lock·stream, transaction·migration | 사용자·관리자·내부 API, command 멱등성, snapshot·SSE·polling |
+| 🤖 **MCP·Agent** | 🖥️ **화면·UX** | 🧭 **전체 설계 문서** |
+| [MCP 설계 요약](docs/arrangement/03_MCP_DESIGN.md) · [MCP Server 정본](docs/개발상세플랜/03_mcp_agent/AI_MAFIA_MCP_SERVER_DESIGN.md) · [Agent 아키텍처](docs/arrangement/06_AGENT_ARCHITECTURE_DESIGN.md) | [화면 설계 요약](docs/arrangement/05_SCREEN_DESIGN.md) · [화면 흐름 정본](docs/개발상세플랜/04_frontend/AI_MAFIA_SCREEN_FLOW.md) | [통합 시스템 설계](docs/arrangement/AI_MAFIA_SYSTEM_ARCHITECTURE_DESIGN.md) · [구현 계획](docs/arrangement/AI_MAFIA_IMPLEMENTATION_PLAN.md) |
+| actor별 문맥, 역할·페르소나 지침, 행동 위임과 Backend 재검증 | 사용자·관전·결과·피드백, 관리자 read-only 분석, 반응형·접근성 | 현재 구현을 기준으로 시스템·데이터·오류·보안 설계를 한 문서에 연결 |
+
+### 설계 축별 핵심 결정
+
+| 설계 축 | 핵심 결정 | 권위와 경계 |
+| --- | --- | --- |
+| 게임 규칙 | 인간 1명과 AI 5~8명이 `mystery-v1` 규칙으로 토론 → 밤 행동 → 투표를 반복합니다. 기본 역할 또는 인간 전용 커스텀 직업을 선택하며, 최대 다섯 번째 밤에도 표준 승패가 없으면 최종 지목으로 끝냅니다. | 역할 배정·행동 유효성·결정적 RNG·승패는 Backend Game Engine만 판정합니다. |
+| 데이터 | 게임·플레이어·행동 창·제출·확정 event·snapshot·멱등 receipt를 PostgreSQL에 보존합니다. Redis는 공개 대화 cache, lock, event fan-out만 담당하며 언제든 원장에서 재구성할 수 있어야 합니다. | [핵심 논리 ERD](docs/arrangement/01_DB_REDIS_DESIGN.md#3-논리-데이터-구조)는 관계를 빠르게 보여 주고, [전체 관계·schema 정본](docs/개발상세플랜/02_backend_data/AI_MAFIA_DB_DESIGN.md#3-관계-개요)은 상세 제약을 정의합니다. |
+| 상태 변경 | 모든 command는 소유권·phase·actor·target·window·deadline·`state_version`을 검사합니다. `Idempotency-Key`와 영구 receipt가 재전송의 중복 반영을 막습니다. | 상태·event·snapshot·receipt는 한 PostgreSQL transaction에서 함께 commit하며, 외부 LLM·MCP 호출 중에는 DB transaction이나 Redis lock을 잡지 않습니다. |
+| API·동기화 | 변경은 단일 command endpoint, 읽기는 authoritative snapshot을 사용합니다. 실시간 갱신은 같은 operation batch를 SSE와 polling에 공통 적용하고 sequence gap이면 전체 snapshot으로 복구합니다. | Front는 Backend 공개 HTTP API만 호출하며 DB·Redis·LLM·raw MCP Tool에 직접 접근하지 않습니다. |
+| AI·MCP | Backend가 actor별 `public`·`me`·`turn`·`persona` 문맥을 만들고, LLM은 현재 허용된 구조화 행동만 제안합니다. 현재 FastMCP는 이 문맥과 역할 지침을 전달하고 행동을 Backend에 위임하는 얇은 adapter입니다. | 모델 응답은 미확정 제안입니다. Backend가 형식·대상·상태를 다시 검증한 뒤에만 적용하며 MCP runtime은 DB·Redis·LLM에 직접 접근하지 않습니다. |
+| 화면 | 사용자 앱은 생성·역할 공개·게임·관전·결과·피드백을, 관리자 앱은 KPI·피드백·감사·공개 발언 분석을 제공합니다. UI는 snapshot과 `legal_actions`를 표현하고 규칙을 추론하지 않습니다. | countdown은 표시용이며 서버 deadline이 기준입니다. 비공개 정보는 해당 actor 화면에만 두고, 관리자 API도 allowlist 기반 read-only로 제한합니다. |
+| 보안·운영 | 브라우저 UUID는 편의용 식별자일 뿐 강한 인증이 아닙니다. prompt·raw 모델 응답·chain-of-thought·secret과 다른 actor의 private context는 공개 응답·cache·로그에서 제외합니다. | 현재 배포 경계는 개인 개발 환경 또는 접근이 통제된 사설망입니다. 공개 인터넷 배포 전에는 별도 인증·TLS·네트워크 접근 통제가 필요합니다. |
+
+### 요청부터 화면 반영까지
+
+| 흐름 | 처리 순서 |
+| --- | --- |
+| 사용자 행동 | Front 입력 → 공개 API 검증 → 게임 행 잠금·Game Engine 적용 → PostgreSQL commit → snapshot/SSE·polling 반영 |
+| AI 행동 | Backend job 선택 → MCP actor 문맥 조회 → LLM 구조화 제안 → Backend 재검증 → 게임 원장 반영 또는 결정적 fallback |
+| 장애 복구 | 중복 요청은 receipt replay → 낡은 화면·늦은 AI 결과는 version/window 검증으로 거부 → Redis·SSE 장애는 PostgreSQL snapshot으로 복구 |
+| 저장·재개 | 확정 상태와 timed window의 남은 시간을 저장 → 재개 시 같은 phase·결과·RNG를 유지하고 새 서버 deadline만 계산 |
+
+정본 문서에는 후속 확장 목표도 포함될 수 있습니다. **현재 동작 여부는 이 README와
+[현재 코드 상태 보고서](docs/개발상세플랜/05_reports/AI_MAFIA_CURRENT_CODE_STATUS.md)를 함께 확인**하고,
+계약이 충돌하면 `AGENTS.MD`와 영역별 정본을 우선합니다.
 
 <a id="agents"></a>
 
@@ -188,6 +228,63 @@ Windows의 `--check`는 환경값 읽기·import만 확인합니다.
 MCP·사용자 Front를 한 번에 실행합니다. 관리자 Front는 이 스택에 포함되지 않으며,
 MCP 포트도 호스트에 공개하지 않습니다. 모든 이미지는 `linux/amd64`로 고정되어 있으므로
 ARM 기반 PC에서는 Docker의 아키텍처 에뮬레이션을 사용하며 실행이 느릴 수 있습니다.
+
+#### AI 에이전트에게 Docker 배포 맡기기
+
+Claude Code, AmpCode, Cursor 같은 LLM 에이전트에서 이 저장소를 연 뒤 아래 프롬프트를
+그대로 붙여넣으세요. 로컬 PC의 Docker Compose 배포를 기준으로 하며, 실제 비밀값은
+채팅에 붙여넣지 말고 `.env.deploy`에만 직접 입력합니다.
+
+```text
+이 저장소의 AI 마피아 서비스를 Docker Compose로 안전하게 설치하고 배포해 주세요.
+
+작업 전에 저장소 루트의 AGENTS.MD와 README.md의 "Docker Compose 배포" 절을 끝까지
+읽고 그 지침을 우선 적용하세요. 현재 branch와 변경 파일을 먼저 확인하되, 기존 사용자
+변경을 덮어쓰거나 되돌리지 마세요. 사용자 승인 없이 commit이나 push를 하지 마세요.
+
+다음 순서로 진행하세요.
+
+1. Docker Engine 또는 Docker Desktop이 실행 중인지, `docker compose`를 사용할 수
+   있는지 확인하세요. 기본 포트 18501, 18000, 55432, 56379의 충돌 여부도 읽기 전용으로
+   확인하세요.
+2. 저장소 루트의 `.env.deploy.example`, `docker-compose.yml`과 이미지 구성을 확인하세요.
+   `.env.deploy`이 없을 때만 예제 파일을 복사하고, 이미 있으면 절대 덮어쓰지 마세요.
+3. `.env.deploy`의 `OPENAI_API_KEY`, `POSTGRES_MIGRATION_PASSWORD`,
+   `POSTGRES_APP_PASSWORD`가 비어 있거나 예제값이면 진행을 멈추고 사용자가 파일에 직접
+   입력하도록 안내하세요. 비밀값을 채팅, 명령 출력, 로그 또는 보고서에 표시하거나
+   대신 생성하지 마세요. 두 PostgreSQL 비밀번호는 서로 달라야 합니다.
+4. `docker compose --env-file .env.deploy config --quiet`로 구성을 검증한 뒤 아래 명령으로
+   이미지를 받고 스택을 시작하세요.
+
+   docker compose --env-file .env.deploy pull
+   docker compose --env-file .env.deploy up -d
+   docker compose --env-file .env.deploy ps
+
+5. PostgreSQL·Redis·Backend·Frontend가 healthy이고 MCP가 Up인지 확인하세요. 이어서
+   아래 endpoint를 확인하세요.
+
+   curl http://127.0.0.1:18000/health
+   curl http://127.0.0.1:18000/ready
+   curl http://127.0.0.1:18501/_stcore/health
+
+6. 실패한 경우 관련 서비스의 최근 로그만 최소 범위로 확인하고 비밀값·DSN·header·
+   token은 출력에서 가리세요. 원인을 좁힌 뒤 안전한 설정 수정만 수행하고 다시 검증하세요.
+7. 완료 시 실행한 명령, 서비스별 최종 상태, health 결과, 사용자 화면
+   `http://127.0.0.1:18501`과 Backend 문서 `http://127.0.0.1:18000/docs`, 남은 문제를
+   짧게 보고하세요. 실제 비밀값은 보고하지 마세요.
+
+데이터 보호 규칙:
+- `docker compose down -v`, `docker volume rm`, `docker system prune`, 데이터 디렉터리
+  삭제처럼 PostgreSQL·Redis 데이터를 지우는 명령은 실행하지 마세요.
+- 기존 named volume이 있으면 보존하세요. `.env.deploy`의 DB 비밀번호 변경만으로 기존
+  volume의 계정 비밀번호가 바뀐다고 가정하지 마세요.
+- 명시적 요청 없이는 포트를 외부 인터페이스에 공개하거나 reverse proxy·TLS·공개 인터넷
+  배포로 범위를 넓히지 마세요. 기본 loopback 바인딩을 유지하세요.
+- 새 migration이 필요한 기존 volume 업그레이드는 임의 실행하지 말고 README의 migration
+  전략과 현재 적용 상태를 확인한 뒤 사용자에게 별도 작업으로 보고하세요.
+```
+
+직접 배포하려면 아래 1~4단계를 순서대로 진행합니다.
 
 #### 1. 사전 준비
 
@@ -501,6 +598,7 @@ Front는 raw MCP Tool을 직접 호출하지 않습니다. 세 밤 능력은 log
 
 | 문서 | 기록된 내용 |
 | --- | --- |
+| [핵심 논리 ERD](docs/arrangement/01_DB_REDIS_DESIGN.md#3-논리-데이터-구조) | 사용자·게임·플레이어·행동 창·제출·이벤트·snapshot·receipt·Agent 작업의 핵심 관계도 |
 | [AI_MAFIA_MASTER_PLAN.md](docs/개발상세플랜/01_core/AI_MAFIA_MASTER_PLAN.md) | 제품 규칙, 시나리오, 아키텍처, 보안 경계, 섹터 소유권, WU/CP 정본 |
 | [AI_MAFIA_DB_DESIGN.md](docs/개발상세플랜/02_backend_data/AI_MAFIA_DB_DESIGN.md) | PostgreSQL·Redis schema, transaction, lock, migration과 보존 계약 |
 | [AI_MAFIA_API_SPEC.md](docs/개발상세플랜/01_core/AI_MAFIA_API_SPEC.md) | 일반·관리자·내부 Engine HTTP API와 MCP Resource·Tool 계약 |
