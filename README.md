@@ -40,6 +40,25 @@ Agent의 실행·검증 결과와 한계는 [에이전트 시험 결과 보고�
 > **한 줄 원칙:** Front와 AI는 행동을 요청하거나 제안하고, Backend가 규칙과 권한을
 > 검증하며, PostgreSQL transaction이 게임의 최종 상태를 확정합니다.
 
+### 핵심 논리 ERD
+
+```mermaid
+erDiagram
+    USERS ||--o{ GAMES : owns
+    GAMES ||--|{ GAME_PLAYERS : contains
+    GAMES ||--o{ ACTION_WINDOWS : opens
+    GAME_PLAYERS ||--o{ ACTION_SUBMISSIONS : submits
+    GAMES ||--o{ GAME_EVENTS : records
+    GAMES ||--o{ GAME_SNAPSHOTS : restores
+    GAMES ||--o{ COMMAND_RECEIPTS : deduplicates
+    GAME_PLAYERS ||--o{ AGENT_JOBS : runs
+    AGENT_JOBS ||--o{ AGENT_CAPABILITIES : grants
+    GAMES ||--o{ FEEDBACK : receives
+```
+
+[ERD 설명 크게 보기](docs/arrangement/01_DB_REDIS_DESIGN.md#3-논리-데이터-구조) ·
+[전체 관계·schema 정본](docs/개발상세플랜/02_backend_data/AI_MAFIA_DB_DESIGN.md#3-관계-개요)
+
 | 🎮 **제품·게임** | 🗃️ **데이터·ERD** | 🔌 **API·동기화** |
 | :--- | :--- | :--- |
 | [공통 마스터플랜](docs/개발상세플랜/01_core/AI_MAFIA_MASTER_PLAN.md) · [게임 엔진·시나리오 설계](docs/arrangement/04_GAME_ENGINE_SCENARIO_DESIGN.md) | [핵심 논리 ERD](docs/arrangement/01_DB_REDIS_DESIGN.md#3-논리-데이터-구조) · [DB·Redis 정본](docs/개발상세플랜/02_backend_data/AI_MAFIA_DB_DESIGN.md) | [API 설계 요약](docs/arrangement/02_API_DESIGN.md) · [API 명세 정본](docs/개발상세플랜/01_core/AI_MAFIA_API_SPEC.md) |
