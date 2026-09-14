@@ -10,7 +10,7 @@
 
 **1 HUMAN + 5–8 AI** · **5 SCENARIOS** · **CUSTOM ROLES**
 
-[독립적인 판단](#agents) · [시스템 관계도](#system) · [MCP 도구](#mcp) · [빠른 실행](#quick-start) · [개발 안내](#development)
+[독립적인 판단](#agents) · [시스템 관계도](#system) · [MCP 도구](#mcp) · [빠른 실행](#quick-start) · [Docker 배포](#docker-deployment) · [개발 안내](#development)
 
 </div>
 
@@ -180,8 +180,145 @@ Windows는 `run_openai.bat --check` / `run_openai.bat`를 사용합니다.
 Windows의 `--check`는 환경값 읽기·import만 확인합니다.
 포트 변경·개별 실행·관리자 전용 실행은 [실행 안내](#running)를 참고하세요.
 
-> 이 MVP는 UUID로 사용자를 구분하는 **로컬·사설망용**입니다. UUID는 강한 인증이 아니며,
-> 관리자 allowlist도 공개 인터넷 배포용 인증을 대신하지 않습니다. [보안과 제약](#security)
+<a id="docker-deployment"></a>
+
+### Docker Compose 배포
+
+`docker-compose.yml`은 Docker Hub의 사전 빌드 이미지를 받아 PostgreSQL·Redis·Backend·
+MCP·사용자 Front를 한 번에 실행합니다. 관리자 Front는 이 스택에 포함되지 않으며,
+MCP 포트도 호스트에 공개하지 않습니다. 모든 이미지는 `linux/amd64`로 고정되어 있으므로
+ARM 기반 PC에서는 Docker의 아키텍처 에뮬레이션을 사용하며 실행이 느릴 수 있습니다.
+
+#### 1. 사전 준비
+
+- Docker Engine 또는 Docker Desktop과 `docker compose` 명령
+- Docker Hub 이미지 다운로드가 가능한 네트워크
+- 유효한 OpenAI API key
+- 기본 호스트 포트 `18501`, `18000`, `55432`, `56379`의 미사용 상태
+
+저장소 루트에서 예제 파일을 실제 배포 설정으로 복사합니다. `.env.deploy`은 Git에서
+제외되므로 실제 key와 비밀번호를 이 파일에만 저장하고, 예제 파일이나 README에는
+기록하지 않습니다.
+
+```bash
+# macOS / Linux
+cp .env.deploy.example .env.deploy
+```
+
+```powershell
+# Windows PowerShell
+Copy-Item .env.deploy.example .env.deploy
+```
+
+`.env.deploy`에서 다음 값을 확인합니다.
+
+| 변수 | 설정 방법 |
+| --- | --- |
+| `OPENAI_API_KEY` | 반드시 실제 key 입력 |
+| `POSTGRES_MIGRATION_PASSWORD` | 예제값 대신 충분히 긴 임의 값 입력 |
+| `POSTGRES_APP_PASSWORD` | migration 계정과 다른 임의 값 입력 |
+| `OPENAI_MODEL` | 선택 사항. 파일에 새 줄로 추가하지 않으면 `gpt-4.1-mini` 사용 |
+| `FRONTEND_HOST_PORT`, `BACKEND_HOST_PORT` | 기본값은 `18501`, `18000`; 충돌할 때 변경 |
+| `POSTGRES_HOST_PORT`, `REDIS_HOST_PORT` | 기본값은 `55432`, `56379`; 충돌할 때 변경 |
+
+OpenAI key는 Backend 컨테이너에만 전달되며 Front·MCP·PostgreSQL·Redis 컨테이너나
+이미지에는 포함되지 않습니다.
+
+PostgreSQL 계정과 비밀번호는 데이터 볼륨을 처음 만들 때만 초기화됩니다. 기존 볼륨을
+유지한 채 `.env.deploy`만 수정해도 DB 비밀번호가 자동으로 변경되지는 않습니다.
+
+#### 2. 이미지 다운로드와 기동
+
+```bash
+docker compose --env-file .env.deploy pull
+docker compose --env-file .env.deploy up -d
+docker compose --env-file .env.deploy ps
+```
+
+Compose가 사용하는 이미지는 다음과 같습니다.
+
+| 서비스 | 이미지 | 호스트 공개·저장 |
+| --- | --- | --- |
+| `frontend` | `shs5029/ai-mafia-frontend:latest` | `127.0.0.1:18501` |
+| `backend` | `shs5029/ai-mafia-backend:latest` | `127.0.0.1:18000` |
+| `mcp` | `shs5029/ai-mafia-mcp:latest` | Compose 내부 `mcp:8100`만 사용 |
+| `postgres` | `shs5029/ai-mafia-postgres:latest` | `127.0.0.1:55432`, named volume에 원본 저장 |
+| `redis` | `shs5029/ai-mafia-redis:latest` | `127.0.0.1:56379`, named volume에 AOF 저장 |
+
+PostgreSQL 이미지는 **빈 볼륨의 최초 초기화 때만** `backend/migrations/*.sql`을 이름순으로
+실행하고 DDL migration 계정과 DML 애플리케이션 계정을 분리합니다. 이미지 업데이트만으로
+기존 볼륨에 새 migration이 적용되지는 않으므로, 기존 데이터를 유지하는 업그레이드는
+[DB migration 전략](docs/개발상세플랜/02_backend_data/AI_MAFIA_DB_DESIGN.md#9-migration-전략)에
+따라 별도 실행·검증해야 합니다.
+
+#### 3. 배포 확인과 장애 확인
+
+`docker compose ps`에서 PostgreSQL·Redis·Backend·Frontend가 `healthy`, MCP가 `Up`인지
+확인한 뒤 다음 주소를 점검합니다.
+
+```bash
+curl http://127.0.0.1:18000/health
+curl http://127.0.0.1:18000/ready
+curl http://127.0.0.1:18501/_stcore/health
+```
+
+- 사용자 화면: `http://127.0.0.1:18501`
+- Backend API 문서: `http://127.0.0.1:18000/docs`
+- `/ready`는 PostgreSQL과 Redis 연결이 모두 정상일 때만 HTTP 200을 반환합니다.
+- LLM Provider와 MCP는 게임 중 fallback 대상이므로 `/ready` 판정에는 포함되지 않습니다.
+
+서비스가 준비되지 않으면 비밀값을 출력하지 않는 범위에서 상태와 최근 로그를 확인합니다.
+
+```bash
+docker compose --env-file .env.deploy ps
+docker compose --env-file .env.deploy logs --tail=100 postgres redis backend mcp frontend
+```
+
+#### 4. 업데이트·재시작·중지
+
+새 이미지를 반영할 때는 pull 후 스택을 다시 적용합니다. named volume은 유지됩니다.
+
+```bash
+docker compose --env-file .env.deploy pull
+docker compose --env-file .env.deploy up -d
+```
+
+설정 변경 뒤 특정 서비스만 다시 만들려면 다음과 같이 실행합니다.
+
+```bash
+docker compose --env-file .env.deploy up -d --force-recreate backend
+```
+
+서비스만 중지하고 데이터를 보존하려면 `down`을 사용합니다.
+
+```bash
+docker compose --env-file .env.deploy down
+```
+
+아래 명령은 PostgreSQL·Redis named volume과 저장 데이터를 함께 삭제합니다. 테스트 데이터를
+의도적으로 초기화할 때만 실행하며 복구할 데이터가 있으면 먼저 백업합니다.
+
+```bash
+docker compose --env-file .env.deploy down -v
+```
+
+#### 네트워크와 보안 범위
+
+기본 포트는 모두 `127.0.0.1`에 바인딩되며 Front의 브라우저 통신 주소도
+`http://127.0.0.1:18000`입니다. 따라서 기본 Compose 파일은 **Docker를 실행한 같은 PC에서
+접속하는 로컬 배포용**입니다. 원격 사설망이나 reverse proxy 배포에는 공개 bind 주소,
+브라우저에서 접근 가능한 Backend URL, TLS와 접근 제어를 함께 설계해야 합니다.
+
+이 MVP는 UUID를 사용자 구분값으로만 사용하고 현재 최소 MCP도 별도 인증을 제공하지
+않으므로 공개 인터넷에 그대로 노출하지 않습니다. 관리자 allowlist 역시 공개 배포용
+인증을 대신하지 않습니다. 자세한 내용은 [보안과 제약](#security)을 참고하세요.
+
+#### Docker 빌드 컨텍스트
+
+루트에서 이미지를 직접 빌드할 때는 반드시 저장소 루트를 build context(`.`)로 사용합니다.
+`.dockerignore`는 실제 환경 파일·secret, 가상환경·캐시·로그를 제외하고 Dockerfile이
+필요한 소스와 migration을 유지합니다. 서비스별 Dockerfile은 `docker/backend/`,
+`docker/frontend/`, `docker/mcp/`, `docker/postgres/`, `docker/redis/`에 있습니다.
 
 <a id="features"></a>
 
@@ -410,10 +547,20 @@ pgvector·RAG 확장도 구분했습니다. 팀 DB의 색인 적용 여부는 20
 ├── AGENTS.MD                         # 개발·기여 작업 규칙
 ├── README.md                         # 전체 설정·실행·검증 안내
 ├── .env.example                      # Backend 환경 변수 예시
+├── .env.deploy.example               # 전체 Docker 스택 배포 변수 예시
+├── .env.docker.example               # Docker DB·Redis 변수 점검용 예시
+├── .dockerignore                     # Docker build context의 비밀·산출물 제외 규칙
+├── docker-compose.yml                # PostgreSQL·Redis·Backend·MCP·사용자 Front 통합 실행
 ├── run_openai.sh                     # macOS/Linux용 OpenAI Backend·MCP·Front 동시 실행
 ├── run_openai.bat                    # Windows용 PowerShell 실행 진입점
 ├── run_openai.ps1                    # Windows용 OpenAI Backend·MCP·Front 실행 로직
 ├── pyproject.toml                    # ai-mafia 통합 런타임·개발 의존성 및 도구 설정
+├── docker/                            # 서비스 이미지 정의와 데이터 서비스 초기화 설정
+│   ├── backend/Dockerfile             # FastAPI Backend 이미지
+│   ├── frontend/Dockerfile            # Streamlit 사용자 Front 이미지
+│   ├── mcp/Dockerfile                 # FastMCP 서버 이미지
+│   ├── postgres/                      # pgvector 기반 DB 이미지와 최초 초기화 스크립트
+│   └── redis/                         # AOF를 사용하는 Redis 이미지와 설정
 ├── backend/
 │   ├── app/main.py                   # FastAPI 생성과 router·오류 처리 등록
 │   ├── app/routers/                  # health·공개 게임·내부 Engine endpoint
