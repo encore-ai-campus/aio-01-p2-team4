@@ -343,7 +343,6 @@ def render(snapshot: dict[str, Any]) -> None:
             _render_players(snapshot=snapshot, me=me, phase=str(phase), client=client)
         with center:
             _render_live_updates(client=client, snapshot=snapshot)
-            _render_bottom_agent_activity(snapshot=snapshot)
         return
 
     if spectating:
@@ -386,7 +385,6 @@ def render(snapshot: dict[str, Any]) -> None:
                 game_id=str(game.get("game_id")),
                 snapshot=snapshot,
             )
-        _render_bottom_agent_activity(snapshot=snapshot)
 
 
 def _sync_snapshot(*, client: Any, snapshot: dict[str, Any]) -> dict[str, Any]:
@@ -503,7 +501,12 @@ def _shell_projection(snapshot: dict[str, Any]) -> dict[str, Any]:
 def _render_live_updates(
     *, client: Any, snapshot: dict[str, Any], show_timeline: bool = True,
 ) -> None:
-    """자동 조회와 공개 기록을 입력 위젯 밖에서 갱신해 작성 중인 DOM을 보존한다."""
+    """자동 조회와 공개 기록을 하나의 fragment에서 갱신해 DOM 충돌을 막는다.
+
+    동기화와 AI 참고 정보가 서로 다른 자동 fragment에 있으면 한 fragment의 전체
+    재실행이 다른 fragment의 DOM을 제거할 수 있다. 두 영역을 같은 fragment에서
+    렌더링하면 상태 변경 시에도 Streamlit fragment 식별자가 서로 엇갈리지 않는다.
+    """
 
     latest = st.session_state.get("game.latest_snapshot", snapshot)
     if latest.get("game", {}).get("game_id") != snapshot.get("game", {}).get("game_id"):
@@ -536,18 +539,10 @@ def _render_live_updates(
         else:
             _render_timeline(snapshot=latest, scenario=latest.get("scenario", {}),
                              phase=str(game.get("phase", "")), day_number=game.get("day_number", 1))
-
-
-@st.fragment(run_every=2)
-def _render_bottom_agent_activity(*, snapshot: dict[str, Any]) -> None:
-    """핵심 대화·행동 UI 아래에 접힌 AI 처리 참고 정보를 배치한다."""
-
-    latest = st.session_state.get("game.latest_snapshot", snapshot)
-    if latest.get("game", {}).get("game_id") != snapshot.get("game", {}).get("game_id"):
-        return
-    # AI 판단과 실행은 게임 진행에 필요한 공개 대화·행동 영역을 모두 표시한 뒤
-    # 페이지 최하단에서 접힌 상태로 렌더링해 사용자의 핵심 입력을 방해하지 않게 한다.
-    _render_agent_activity(snapshot=latest)
+        # AI 참고 정보도 같은 fragment 안에서 그려야 상태 전환 때 다른 fragment가
+        # 제거되는 경합이 생기지 않는다. 행동 단계에서는 호출하지 않아 기존처럼
+        # 핵심 입력 영역을 우선한다.
+        _render_agent_activity(snapshot=latest)
 
 
 def _render_visible_action_panel(**kwargs: Any) -> None:
@@ -899,7 +894,6 @@ def _render_spectator_layout(
             st.caption("게임은 AI 플레이어끼리 계속 진행되며 공개 범위의 정보만 표시됩니다.")
         _render_live_updates(client=client, snapshot=snapshot)
         _render_spectator_controls(client=client, game_id=game_id, snapshot=snapshot)
-        _render_bottom_agent_activity(snapshot=snapshot)
     with right:
         _render_spectator_private(client=client, snapshot=snapshot, me=me)
 

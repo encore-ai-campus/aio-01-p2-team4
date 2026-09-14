@@ -39,6 +39,7 @@ class BackendApiConfig:
 
     api_url: str
     timeout_seconds: float = 5.0
+    allow_insecure_http: bool = False
 
     def __post_init__(self) -> None:
         """운영 HTTPS와 loopback 개발 HTTP만 허용해 임의 endpoint 호출을 막는다."""
@@ -49,9 +50,17 @@ class BackendApiConfig:
             port = parsed.port
         except ValueError as exc:
             raise ApiClientConfigurationError("Backend API URL이 올바르지 않습니다.") from exc
-        local_http = parsed.scheme == "http" and parsed.hostname in {"localhost", "127.0.0.1", "::1"}
-        if (not parsed.hostname or parsed.username or parsed.password or parsed.query or parsed.fragment
-                or parsed.path not in {"", "/"} or (parsed.scheme != "https" and not local_http)
+        local_http = parsed.scheme == "http" and parsed.hostname in {
+            "localhost", "127.0.0.1", "::1",
+        }
+        # Docker 내부망은 Front 컨테이너와 Backend 컨테이너 사이에서만 사용한다.
+        # 기본값은 계속 loopback·HTTPS만 허용하며, Compose가 명시적으로 주입한
+        # allowlist 플래그가 있을 때만 서비스명 기반 HTTP를 허용한다.
+        private_network_http = parsed.scheme == "http" and self.allow_insecure_http
+        if (
+            not parsed.hostname or parsed.username or parsed.password or parsed.query or parsed.fragment
+                or parsed.path not in {"", "/"}
+                or (parsed.scheme != "https" and not (local_http or private_network_http))
                 or (port is not None and not 1 <= port <= 65_535)):
             raise ApiClientConfigurationError("Backend API URL이 안전하지 않습니다.")
         if not 0 < self.timeout_seconds <= 30:
@@ -72,7 +81,12 @@ class ApiClient:
         self.user_id = UUID(str(user_id))
         if self.user_id.version != 4:
             raise ValueError("사용자 ID는 UUID v4여야 합니다.")
-        self.config = BackendApiConfig(api_url=api_url or os.getenv("BACKEND_API_URL", "http://127.0.0.1:8000"))
+        self.config = BackendApiConfig(
+            api_url=api_url or os.getenv("BACKEND_API_URL", "http://127.0.0.1:8000"),
+            allow_insecure_http=(
+                os.getenv("BACKEND_API_ALLOW_INSECURE_HTTP", "false").lower() == "true"
+            ),
+        )
         self._transport = transport or _send
         self._request_id_factory = request_id_factory
 

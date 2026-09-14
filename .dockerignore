@@ -1,0 +1,68 @@
+# Git 메타데이터는 이미지에 필요하지 않지만, 저장소의 .gitignore 파일과 그 예외
+# 규칙으로 다시 허용된 파일은 Docker 빌드 컨텍스트에서 확인할 수 있도록 유지한다.
+.git/
+
+# 정본 설계 문서·검증 자료와 모든 .gitignore 파일은 Docker 빌드 컨텍스트에 포함한다.
+!docs/
+!docs/**
+!.gitignore
+!**/.gitignore
+
+# 비밀정보와 로컬 설정은 제외하고, 저장소에 제공하는 예시 환경 파일만 포함한다.
+.env
+.env.*
+!.env.example
+!.env.docker.example
+!.env.deploy.example
+**/.streamlit/secrets.toml
+!**/.streamlit/secrets.toml.example
+
+# Python 가상환경·캐시·검증 산출물은 서비스 이미지에 포함하지 않는다.
+**/.venv/
+**/venv/
+**/__pycache__/
+**/*.py[cod]
+**/*.pyo
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/.coverage
+**/htmlcov/
+
+# Node.js 의존성과 프론트엔드 빌드 산출물은 서비스 이미지에서 재생성한다.
+**/node_modules/
+**/dist/
+**/.vite/
+**/coverage/
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+**/pnpm-debug.log*
+
+# 운영체제·편집기 산출물과 실행 로그에는 로컬 정보가 섞일 수 있으므로 제외한다.
+**/.DS_Store
+**/.idea/
+**/.vscode/
+*.log
+/*_runtime*.log
+backend/logs/
+
+# Git에서 기본 제외하지만 .gitignore가 명시적으로 다시 허용한 회귀 파일은 포함한다.
+tests/
+backend/tests/
+!backend/tests/
+backend/tests/*
+!backend/tests/test_agent_activity.py
+!backend/tests/test_agent_report_behavior.py
+!backend/tests/test_agent_report_recovery.py
+!backend/tests/test_speech_analysis_repository.py
+!backend/tests/test_speech_analysis_provider.py
+!backend/tests/test_speech_analysis_worker.py
+!backend/tests/test_vote_insights.py
+!backend/tests/test_vote_insight_integration.py
+frontend_user/tests/
+!frontend_user/tests/
+frontend_user/tests/*
+!frontend_user/tests/test_identity_f1.py
+!frontend_user/tests/test_vote_insights_f9.py
+mcp_server/tests/

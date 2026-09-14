@@ -1,0 +1,101 @@
+services:
+  postgres:
+    image: shs5029/ai-mafia-postgres:latest
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-ai_mafia}
+      POSTGRES_USER: ${POSTGRES_MIGRATION_USER:-migration_user}
+      POSTGRES_PASSWORD: ${POSTGRES_MIGRATION_PASSWORD:-change-this-migration-password}
+      APP_DB_USER: ${POSTGRES_APP_USER:-app_user}
+      APP_DB_PASSWORD: ${POSTGRES_APP_PASSWORD:-change-this-app-password}
+    ports:
+      - "127.0.0.1:${POSTGRES_HOST_PORT:-55432}:5432"
+    volumes:
+      - ai_mafia_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: shs5029/ai-mafia-redis:latest
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${REDIS_HOST_PORT:-56379}:6379"
+    volumes:
+      - ai_mafia_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  backend:
+    image: shs5029/ai-mafia-backend:latest
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_APP_USER:-app_user}:${POSTGRES_APP_PASSWORD:-change-this-app-password}@postgres:5432/${POSTGRES_DB:-ai_mafia}
+      DATABASE_NAME: ${POSTGRES_DB:-ai_mafia}
+      REDIS_URL: redis://redis:6379/0
+      MCP_SERVER_URL: http://mcp:8100
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4.1-mini}
+      LLM_PROVIDER: ${LLM_PROVIDER:-openai}
+      LLM_MAX_OUTPUT_TOKENS: ${LLM_MAX_OUTPUT_TOKENS:-8192}
+      LLM_TIMEOUT_SECONDS: ${LLM_TIMEOUT_SECONDS:-30}
+      AI_MAFIA_STORAGE_MODE: isolated
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/ready', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    ports:
+      - "127.0.0.1:${BACKEND_HOST_PORT:-18000}:8000"
+
+  mcp:
+    image: shs5029/ai-mafia-mcp:latest
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      BACKEND_API_URL: http://backend:8000
+      BACKEND_API_ALLOW_INSECURE_HTTP: "true"
+      MCP_ALLOWED_HOSTS: mcp:8100
+      MCP_LISTEN_HOST: 0.0.0.0
+      MCP_LISTEN_PORT: 8100
+    depends_on:
+      backend:
+        condition: service_healthy
+
+  frontend:
+    image: shs5029/ai-mafia-frontend:latest
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      BACKEND_API_URL: http://backend:8000
+      BACKEND_BROWSER_URL: http://127.0.0.1:${BACKEND_HOST_PORT:-18000}
+      BACKEND_API_ALLOW_INSECURE_HTTP: "true"
+    depends_on:
+      backend:
+        condition: service_healthy
+      mcp:
+        condition: service_started
+    ports:
+      - "127.0.0.1:${FRONTEND_HOST_PORT:-18501}:8501"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8501/_stcore/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+volumes:
+  ai_mafia_postgres_data:
+  ai_mafia_redis_data:

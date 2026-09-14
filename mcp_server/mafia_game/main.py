@@ -8,6 +8,7 @@ import os
 from uuid import uuid4
 
 from mcp.server.fastmcp import FastMCP
+from mcp.server.transport_security import TransportSecuritySettings
 
 from mafia_game.api.prompts.registry import register_prompts
 from mafia_game.api.resources.registry import register_resources
@@ -117,11 +118,19 @@ def create_fastmcp_server(backend: BackendContextClient | None = None) -> FastMC
     남겨 MCP 등록부가 자체 판단을 수행하지 않도록 한다.
     """
 
+    configured_hosts = os.environ.get(
+        "MCP_ALLOWED_HOSTS", "127.0.0.1:*,localhost:*,[::1]:*"
+    )
+    allowed_hosts = [host.strip() for host in configured_hosts.split(",") if host.strip()]
     server = FastMCP(
         "ai-mafia-mcp",
         json_response=True,
         stateless_http=False,
         streamable_http_path="/mcp",
+        transport_security=TransportSecuritySettings(
+            enable_dns_rebinding_protection=True,
+            allowed_hosts=allowed_hosts,
+        ),
     )
     if backend is not None:
         register_fastmcp_components(server, backend)
@@ -153,7 +162,10 @@ def run() -> None:
     backend_url = os.environ.get("BACKEND_API_URL", "http://127.0.0.1:8000")
     host = os.environ.get("MCP_LISTEN_HOST", "127.0.0.1")
     port = int(os.environ.get("MCP_LISTEN_PORT", "8100"))
-    backend = MinimalBackendContextClient(backend_url)
+    backend = MinimalBackendContextClient(
+        backend_url,
+        allow_insecure_http=os.environ.get("BACKEND_API_ALLOW_INSECURE_HTTP", "false").lower() == "true",
+    )
     DiagnosticSpan("runtime.startup").emit("ok")
     # Uvicorn이 formatter를 다시 덮어쓰거나 요청 URL을 별도 access logger로 내보내지 않는다.
     uvicorn.run(

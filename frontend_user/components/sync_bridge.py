@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from dataclasses import asdict
 from pathlib import Path
 from typing import Any
@@ -27,7 +28,11 @@ def mount_sse(*, backend_url: str, game_id: str, user_id: UUID, last_sequence: i
     # Backend CORS/proxy는 X-User-Id, X-Request-Id, Last-Event-ID를 허용해야 하며,
     # game_id·UUID를 query parameter에 넣어서는 안 된다.
 
-    scope = (backend_url, game_id, str(user_id), st.session_state.get("identity.scope_version"))
+    # Python에서 실행되는 Frontend는 Docker 내부 DNS 이름을 사용하지만, 이
+    # component의 JavaScript는 사용자의 브라우저에서 실행된다. 브라우저가
+    # 접근할 수 있는 공개 Backend 주소를 별도 설정으로 받아 두 주소를 섞지 않는다.
+    browser_backend_url = os.getenv("BACKEND_BROWSER_URL", backend_url).strip().rstrip("/")
+    scope = (browser_backend_url, game_id, str(user_id), st.session_state.get("identity.scope_version"))
     if st.session_state.get("game.sync_scope") != scope:
         st.session_state["game.sync_scope"] = scope
         st.session_state["game.sync_scope_version"] = str(uuid4())
@@ -41,7 +46,7 @@ def mount_sse(*, backend_url: str, game_id: str, user_id: UUID, last_sequence: i
     try:
         result = SYNC_COMPONENT(
             data={"schema_version": 1, "component_instance_id": instance, "scope_version": scope_version,
-                  "backend_url": backend_url, "game_id": game_id, "user_id": str(user_id),
+                  "backend_url": browser_backend_url, "game_id": game_id, "user_id": str(user_id),
                   "last_sequence": last_sequence, "after_sequence": last_sequence,
                   "after_state_version": after_state_version, "policy": asdict(DEFAULT_SYNC_POLICY)},
             # component는 공개 기록 fragment 안에서만 실행한다. 2초 진행 tick도

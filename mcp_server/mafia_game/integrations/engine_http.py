@@ -213,13 +213,18 @@ class MinimalBackendContextClient:
         backend_api_url: str,
         *,
         client: httpx.AsyncClient | None = None,
+        allow_insecure_http: bool = False,
     ) -> None:
         parsed = urlsplit(backend_api_url)
         if parsed.scheme not in {"http", "https"} or not parsed.netloc:
             raise ValueError("BACKEND_API_URL must be an absolute HTTP(S) URL")
         if parsed.query or parsed.fragment or parsed.username or parsed.password:
             raise ValueError("BACKEND_API_URL must not include query, fragment, or userinfo")
-        if parsed.scheme == "http" and parsed.hostname not in {"127.0.0.1", "localhost", "::1"}:
+        # Docker 내부망은 Compose가 명시적으로 허용한 경우에만 서비스명 HTTP를
+        # 사용한다. 기본값은 기존처럼 loopback·HTTPS만 허용해 임의 endpoint
+        # 호출을 막는다.
+        private_network_http = parsed.scheme == "http" and allow_insecure_http
+        if parsed.scheme == "http" and parsed.hostname not in {"127.0.0.1", "localhost", "::1"} and not private_network_http:
             raise ValueError("plain HTTP is allowed only for loopback development")
         self._base_url = backend_api_url.rstrip("/")
         self._client = client or httpx.AsyncClient(timeout=10.0, trust_env=False)
