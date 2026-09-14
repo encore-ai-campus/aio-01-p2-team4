@@ -236,7 +236,8 @@ Claude Code, AmpCode, Cursor 같은 LLM 에이전트에서 이 저장소를 연 
 채팅에 붙여넣지 말고 `.env.deploy`에만 직접 입력합니다.
 
 ```text
-이 저장소의 AI 마피아 서비스를 Docker Compose로 안전하게 설치하고 배포해 주세요.
+이 저장소(https://github.com/encore-ai-campus/aio-01-p2-team4#docker-deployment)
+의 AI 마피아 서비스를 Docker Compose로 안전하게 설치하고 배포해 주세요.
 
 작업 전에 저장소 루트의 AGENTS.MD와 README.md의 "Docker Compose 배포" 절을 끝까지
 읽고 그 지침을 우선 적용하세요. 현재 branch와 변경 파일을 먼저 확인하되, 기존 사용자
